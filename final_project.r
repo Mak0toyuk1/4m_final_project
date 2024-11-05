@@ -46,31 +46,29 @@ shapiro.test(diabetes_data$Age) # Not normal
 
 
 
-## FA
-par(mfrow = c(1,3))
-fa1<-factanal(food, factors = 2, rotation = "none")
+## FA, we use 3 factors by the eigenvalue method.
+# par(mfrow = c(1,3))
+fa1<-factanal(diabetes_data, factors = 3, rotation = "none")
 fa1
-plot(fa1$loadings[,1],fa1$loadings[,2], xlab = "U1", ylab = "U2", 
-     ylim = c(-1,1),xlim = c(-1,1), main="no rotation")
-text(fa1$loadings[,1]-0.1, fa1$loadings[,2]+0.1,colnames(food),col="red")
-abline(h = 0, v = 0)
+# plot(fa1$loadings[,1],fa1$loadings[,2], xlab = "U1", ylab = "U2", 
+#      ylim = c(-1,1),xlim = c(-1,1), main="no rotation")
+# text(fa1$loadings[,1]-0.1, fa1$loadings[,2]+0.1,colnames(food),col="red")
+# abline(h = 0, v = 0)
 
-fa2<-factanal(food, factors = 2, rotation = "varimax")
+fa2<-factanal(diabetes_data, factors = 3, rotation = "varimax")
 fa2
-plot(fa2$loadings[,1],fa2$loadings[,2], xlab = "U1", ylab = "U2", 
-     ylim = c(-1,1),xlim = c(-1,1),main="with varimax")
-text(fa2$loadings[,1]-0.1, fa2$loadings[,2]+0.1,colnames(food),col="red")
-abline(h = 0, v = 0)
+# plot(fa2$loadings[,1],fa2$loadings[,2], xlab = "U1", ylab = "U2", 
+#      ylim = c(-1,1),xlim = c(-1,1),main="with varimax")
+# text(fa2$loadings[,1]-0.1, fa2$loadings[,2]+0.1,colnames(food),col="red")
+# abline(h = 0, v = 0)
 
-fa3<-factanal(food, factors = 2, rotation = "promax")
+fa3<-factanal(diabetes_data, factors = 3, rotation = "promax")
 fa3
-plot(fa3$loadings[,1],fa3$loadings[,2], xlab = "U1", ylab = "U2", 
-     ylim = c(-1,1),xlim = c(-1,1), main="with promax")
-text(fa3$loadings[,1]-0.1, fa3$loadings[,2]+0.1,colnames(food),col="red")
-abline(h = 0, v = 0)
+# plot(fa3$loadings[,1],fa3$loadings[,2], xlab = "U1", ylab = "U2", 
+#      ylim = c(-1,1),xlim = c(-1,1), main="with promax")
+# text(fa3$loadings[,1]-0.1, fa3$loadings[,2]+0.1,colnames(food),col="red")
+# abline(h = 0, v = 0)
 
-#job-candidate data
-job <- read.csv("/Users/Eman/Desktop/job-candidates.csv")
-str(job)
+
 
 
