@@ -1,4 +1,6 @@
 diabetes_data <-read.csv("/home/evo/Mcmaster/4m03/R code/diabetes_dataset.csv")
+diabetes_data <-read.csv("C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/diabetes_dataset.csv")
+
 
 library(ggplot2)
 library(dplyr)# Library for the Shapiro-Wilk test
@@ -32,3 +34,76 @@ shapiro.test(diabetes_data$Insulin) # Not normal
 shapiro.test(diabetes_data$BMI) # Not normal
 
 shapiro.test(diabetes_data$Age) # Not normal
+
+### Some Factor Analysis examples
+rm(list=ls())
+
+#Food texture data from http://openmv.net/info/food-texture
+# I have made a csv file from these data
+food <- read.csv("/Users/Eman/Desktop/food-texture.csv",row.names = "X")
+str(food)
+
+
+
+#how many Factors?
+cov.mat <- cov(scale(food)) # computes the covariance matrix of the food data
+eigenvalues <- eigen(cov.mat)$values # computes the eigenvalues of the covariance matrix of the food data
+eigenvalues
+which(eigenvalues > 1)
+## FA
+par(mfrow = c(1,3))
+fa1<-factanal(food, factors = 2, rotation = "none")
+fa1
+plot(fa1$loadings[,1],fa1$loadings[,2], xlab = "U1", ylab = "U2", 
+     ylim = c(-1,1),xlim = c(-1,1), main="no rotation")
+text(fa1$loadings[,1]-0.1, fa1$loadings[,2]+0.1,colnames(food),col="red")
+abline(h = 0, v = 0)
+
+fa2<-factanal(food, factors = 2, rotation = "varimax")
+fa2
+plot(fa2$loadings[,1],fa2$loadings[,2], xlab = "U1", ylab = "U2", 
+     ylim = c(-1,1),xlim = c(-1,1),main="with varimax")
+text(fa2$loadings[,1]-0.1, fa2$loadings[,2]+0.1,colnames(food),col="red")
+abline(h = 0, v = 0)
+
+fa3<-factanal(food, factors = 2, rotation = "promax")
+fa3
+plot(fa3$loadings[,1],fa3$loadings[,2], xlab = "U1", ylab = "U2", 
+     ylim = c(-1,1),xlim = c(-1,1), main="with promax")
+text(fa3$loadings[,1]-0.1, fa3$loadings[,2]+0.1,colnames(food),col="red")
+abline(h = 0, v = 0)
+
+#job-candidate data
+job <- read.csv("/Users/Eman/Desktop/job-candidates.csv")
+str(job)
+
+#how many Factors?
+cov.mat <- cov(scale(job)) # computes the covariance matrix of the food data
+eigenvalues <- eigen(cov.mat)$values # computes the eigenvalues of the covariance matrix of the food data
+eigenvalues
+which(eigenvalues > 1)
+## FA
+
+fa1<-factanal(job, factors = 4, rotation = "none")
+fa1
+
+fa2<-factanal(job, factors = 4, rotation = "varimax")
+fa2
+
+fa3<-factanal(job, factors = 4, rotation = "promax")
+fa3
+
+## try scale?
+df1= scale(job)
+fa3a<-factanal(df1, factors = 4, rotation = "promax")
+fa3a
+
+## try more factors?
+
+fa3b<-factanal(job, factors = 5, rotation = "promax")
+fa3b
+
+## try less factors?
+
+fa3c<-factanal(job, factors = 2, rotation = "promax")
+fa3c
