@@ -21,6 +21,8 @@ plot(eigenvals,xlab="Principal Component",ylab="Eigenvalue",main="Eigenvalue vs.
 
 # Normality test for factor analysis. 
 
+# This is some text
+
 shapiro.test(diabetes_data$Pregnancies) # Not normal, p= 2.2e-16
 
 shapiro.test(diabetes_data$Glucose) # Not normal
@@ -34,6 +36,8 @@ shapiro.test(diabetes_data$Insulin) # Not normal
 shapiro.test(diabetes_data$BMI) # Not normal
 
 shapiro.test(diabetes_data$Age) # Not normal
+
+# This is some text
 
 ### Some Factor Analysis examples
 rm(list=ls())
