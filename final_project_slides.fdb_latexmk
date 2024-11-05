@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1730750325.62292 "/home/evo/4m_final_project/final_project_slides.tex" "final_project_slides.pdf" "final_project_slides" 1730750326.50594 0
-  "/home/evo/4m_final_project/final_project_slides.tex" 1730750325.43465 829 6a229e05704dcae908a5d03f2a8fcabf ""
+["pdflatex"] 1730750959.71521 "/home/evo/4m_final_project/final_project_slides.tex" "final_project_slides.pdf" "final_project_slides" 1730750960.86056 0
+  "/home/evo/4m_final_project/final_project_slides.tex" 1730750959.49946 833 8ea1a91804497eb0c1563aea5de6bdcd ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1727349926 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texmf-dist/fonts/tfm/public/cm/cmr10.tfm" 1727349926 1296 45809c5a464d5f32c8f98ba97c1bb47f ""
   "/usr/share/texmf-dist/fonts/tfm/public/cm/cmss10.tfm" 1727349926 1316 b636689f1933f24d1294acdf6041daaa ""
@@ -166,10 +166,10 @@
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1727349926 41588 b43d3e860a4f94167ee1e725ff526a72 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1727369045.03471 5311862 0722f54309a88f705d8cb84897a212d3 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1727369024 7112996 ef75746df9d76e3b29fe87ba73f5fde5 ""
-  "final_project_slides.aux" 1730750326.43797 967 1150d5a706f5c5a0e25d001512012309 "pdflatex"
-  "final_project_slides.nav" 1730750326.43797 571 686a2d273024229235dc0db1f461ba6c "pdflatex"
-  "final_project_slides.out" 1730750326.26131 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "final_project_slides.tex" 1730750325.43465 829 6a229e05704dcae908a5d03f2a8fcabf ""
+  "final_project_slides.aux" 1730750960.77611 967 1150d5a706f5c5a0e25d001512012309 "pdflatex"
+  "final_project_slides.nav" 1730750960.77611 571 686a2d273024229235dc0db1f461ba6c "pdflatex"
+  "final_project_slides.out" 1730750960.53945 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "final_project_slides.tex" 1730750959.49946 833 8ea1a91804497eb0c1563aea5de6bdcd ""
   (generated)
   "final_project_slides.aux"
   "final_project_slides.log"
