@@ -3,7 +3,6 @@ diabetes_data <-read.csv("/home/evo/Mcmaster/4m03/R code/diabetes_dataset.csv")
 library(ggplot2)
 library(dplyr)
 
-shapiro.test(diabetes_data$len)
 
 diabetes_pca<-prcomp(diabetes_data,scale=TRUE)
 diabetes_pca
@@ -17,3 +16,5 @@ eigenvals
 cumsum(eigenvals)/sum(eigenvals) # same as last line in summary(heptathlon_pca2) "Cumulative Proportion"
 
 plot(eigenvals,xlab="Principal Component",ylab="Eigenvalue",main="Eigenvalue vs. Principal) Component",type ="l" ) #Eigenvalues suggest that we should take 3 principle components.
+
+shapiro.test(diabetes_data$len) # Normality test for factor analysis.
