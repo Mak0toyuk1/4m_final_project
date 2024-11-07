@@ -7,7 +7,7 @@ diabetes_data <-read.csv("C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_proj
 library(ggplot2)
 library(dplyr)# Library for the Shapiro-Wilk test
 
-#hello
+
 diabetes_pca<-prcomp(diabetes_data,scale=TRUE)
 diabetes_pca
 
