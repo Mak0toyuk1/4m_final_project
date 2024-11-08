@@ -3,6 +3,9 @@
 diabetes_data <-read.csv("/home/evo/Mcmaster/4m03/R code/diabetes_dataset.csv") # Tony's dataset
 diabetes_data <-read.csv("C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/diabetes_dataset.csv") # Safi's dataset
 
+# Using the normal QQ-Plot to confirm that the dataset is not normally distributed
+qqnorm(diabetes_data[,1])
+qqline(diabetes_data[,1])
 
 library(ggplot2)
 library(dplyr)# Library for the Shapiro-Wilk test
