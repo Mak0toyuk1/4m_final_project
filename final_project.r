@@ -7,6 +7,9 @@ library(ggplot2)
 library(dplyr)# Library for the Shapiro-Wilk test
 
 
+
+PCA
+#################################################################################################################################
 diabetes_pca<-prcomp(diabetes_data,scale=TRUE)
 diabetes_pca
 
@@ -19,7 +22,12 @@ eigenvals
 cumsum(eigenvals)/sum(eigenvals) # same as last line in summary(heptathlon_pca2) "Cumulative Proportion"
 
 plot(eigenvals,xlab="Principal Component",ylab="Eigenvalue",main="Eigenvalue vs. Principal) Component",type ="l" ) #Eigenvalues suggest that we should take 3 principle components.
+#################################################################################################################################
 
+
+
+Normality Test
+#################################################################################################################################
 # Normality test for factor analysis. 
 
 # This is some text
@@ -41,6 +49,31 @@ shapiro.test(diabetes_data$Age) # Not normal
 # Using the normal QQ-Plot to confirm that the dataset is not normally distributed
 qqnorm(diabetes_data[,1])
 qqline(diabetes_data[,1])
+#################################################################################################################################
+
+
+
+Random Forest Classifier
+#################################################################################################################################
+set.seed(2024118)
+train = sample (1: nrow(diabetes_data), nrow(diabetes_data)*0.75)
+test = diabetes_data[-train,"Outcome"]
+
+rf1=randomForest(Outcome~.,data=diabetes_data,subset=train,mtry=3,importance=TRUE)
+rf1
+prediction1 = predict(rf1,diabetes_data[-train,],type="response")
+prediction1 = round(prediction1, 0)
+ConfusionMatrix<-table(test, prediction1)
+ConfusionMatrix
+MCR <- 1 - sum(diag(ConfusionMatrix)) / sum(ConfusionMatrix)
+MCR
+
+varImpPlot(rf1)
+#################################################################################################################################
+
+
+
+
 
 # This is some text
 
