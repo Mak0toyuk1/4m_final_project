@@ -8,7 +8,7 @@ library(dplyr)# Library for the Shapiro-Wilk test
 
 
 
-PCA
+PCA # To be merged into EDA?
 #################################################################################################################################
 diabetes_pca<-prcomp(diabetes_data,scale=TRUE)
 diabetes_pca
@@ -82,7 +82,7 @@ varImpPlot(rf1)
 
 
 
-## FA, we use 3 factors by the eigenvalue method.
+## FA, we use 3 factors by the eigenvalue method. To be merged into EDA?
 # par(mfrow = c(1,3))
 fa1<-factanal(diabetes_data, factors = 3, rotation = "none")
 fa1
