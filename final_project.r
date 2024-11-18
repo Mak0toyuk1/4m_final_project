@@ -75,36 +75,7 @@ varImpPlot(rf1)
 
 
 
-# This is some text
-
-
-
-
-
-
-## FA, we use 3 factors by the eigenvalue method. To be merged into EDA?
-# par(mfrow = c(1,3))
-fa1<-factanal(diabetes_data, factors = 3, rotation = "none")
-fa1
-# plot(fa1$loadings[,1],fa1$loadings[,2], xlab = "U1", ylab = "U2", 
-#      ylim = c(-1,1),xlim = c(-1,1), main="no rotation")
-# text(fa1$loadings[,1]-0.1, fa1$loadings[,2]+0.1,colnames(food),col="red")
-# abline(h = 0, v = 0)
-
-fa2<-factanal(diabetes_data, factors = 3, rotation = "varimax")
-fa2
-# plot(fa2$loadings[,1],fa2$loadings[,2], xlab = "U1", ylab = "U2", 
-#      ylim = c(-1,1),xlim = c(-1,1),main="with varimax")
-# text(fa2$loadings[,1]-0.1, fa2$loadings[,2]+0.1,colnames(food),col="red")
-# abline(h = 0, v = 0)
-
-fa3<-factanal(diabetes_data, factors = 3, rotation = "promax")
-fa3
-# plot(fa3$loadings[,1],fa3$loadings[,2], xlab = "U1", ylab = "U2", 
-#      ylim = c(-1,1),xlim = c(-1,1), main="with promax")
-# text(fa3$loadings[,1]-0.1, fa3$loadings[,2]+0.1,colnames(food),col="red")
-# abline(h = 0, v = 0)
-
+# Need to add tab.stuff to compare are the Supervised Learning Analysis Methods
 
 
 
