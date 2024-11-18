@@ -98,6 +98,7 @@ diabetes_data$Outcome<-factor(diabetes_data$Outcome)
 set.seed(2024118)
 
 train.index <- createDataPartition(diabetes_data$Outcome, p=.75, list = FALSE)
+# train.index <- createDataPartition(diabetes_data$Outcome, p=.80, list = FALSE) # Try 80 percent? apparently this is a more common approach.
 y <- diabetes_data[train.index,9]
 x <- diabetes_data[train.index,-9]
 y <- as.factor(y)
