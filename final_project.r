@@ -68,7 +68,7 @@ ConfusionMatrix
 MCR <- 1 - sum(diag(ConfusionMatrix)) / sum(ConfusionMatrix)
 MCR
 
-varImpPlot(rf1)
+varImpPlot(rf1, main = "Variable Importance in Predicting Diabetes")
 #################################################################################################################################
 
 
