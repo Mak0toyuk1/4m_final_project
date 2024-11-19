@@ -1,0 +1,5 @@
+@misc{kaggles,
+  title = {{kaggles} dataset from kaggles},
+  howpublished = {\url{https://www.kaggle.com/datasets/hasibur013/diabetes-dataset}},
+  note = {Accessed: 2024-09-20}
+}
