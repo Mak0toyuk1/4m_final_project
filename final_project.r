@@ -8,7 +8,7 @@ library(dplyr)# Library for the Shapiro-Wilk test
 
 
 
-PCA # To be merged into EDA?
+#PCA # To be merged into EDA?
 #################################################################################################################################
 diabetes_pca<-prcomp(diabetes_data,scale=TRUE)
 diabetes_pca

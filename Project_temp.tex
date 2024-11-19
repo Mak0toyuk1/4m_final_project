@@ -10,20 +10,24 @@
 % \usepackage{apacite}
 \usepackage[demo]{graphicx}
 \usepackage{subcaption}
-\usepackage{graphicx}
 \usepackage{lscape, xcolor}
 \usepackage{verbatim}
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage[sc]{mathpazo} % Use the Palatino font
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
 \usepackage{times}	
-\usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{ caption, float}
 \usepackage{enumitem}
 \usepackage[left=1in, right=1in, top=1in, bottom=1in]{geometry}
 \usepackage{blindtext}
 \usepackage{titlesec}
+\usepackage{graphicx}
+\graphicspath{/home/evo/4m_final_project}
+
+\setcounter{secnumdepth}{4}
+
+
 \titleformat{\paragraph}
 {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
 \titlespacing*{\paragraph}
@@ -31,6 +35,7 @@
 \renewcommand{\baselinestretch}{1.5}% Line spacing - Palatino needs more space 
 \vspace{\baselineskip}
 \linespread{1.5}
+
 
 
 \begin{document}
@@ -67,6 +72,18 @@ In this paper, we will study the dataset: diabetes. \cite{Kaggles}\\
 \subsubsection{Exploratory Data Analysis (EDA)}
 In this paper, we used several EDA methods to analyze our dataset. These methods include: PCA, and a normal QQ-plot.
 \paragraph{PCA}
+
+From figure 1, we observe that we should take 3 principle components.
+
+% \begin{figure}[h!]
+%      \includegraphics[width= 0.60\textwidth, height = 65mm]{eigenvalues_plot.png}\\
+%     \caption{Plot of the eigenvalues}
+% \end{figure}
+
+
+\paragraph{QQ-plot}
+
+From figure 2, we observe that the dataset is not normal
 
 
 ...... 
