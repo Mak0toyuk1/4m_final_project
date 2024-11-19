@@ -59,7 +59,10 @@ set.seed(2024118)
 train = sample (1: nrow(diabetes_data), nrow(diabetes_data)*0.75)
 test = diabetes_data[-train,"Outcome"]
 
-rf1=randomForest(Outcome~.,data=diabetes_data,subset=train,mtry=4,importance=TRUE)
+rf_tune = tune.randomForest(Outcome~., data = diabetes_data[train,], mtry = 1:8, ntree = 100*1:5, tunecontrol = tune.control(sampling = "cross",cross=5))
+rf_tune
+
+rf1=randomForest(Outcome~.,data=diabetes_data,subset=train,mtry=2, ntree = 200, importance=TRUE)
 rf1
 prediction1 = predict(rf1,diabetes_data[-train,],type="response")
 prediction1 = round(prediction1, 0)
