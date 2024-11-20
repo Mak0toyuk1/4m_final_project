@@ -30,7 +30,10 @@ diabetes_data <- read.csv(data)
 df <- diabetes_data
 ## quick look
 head(df)
+
+# Viewing variable/data types
 str(df)
+
 
 # Dimensions of the data
 dim(df)
