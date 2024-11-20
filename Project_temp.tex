@@ -23,6 +23,7 @@
 \usepackage[left=1in, right=1in, top=1in, bottom=1in]{geometry}
 \usepackage{blindtext}
 \usepackage{titlesec}
+\usepackage{array}
 \usepackage{graphicx}
 %\graphicspath{/home/evo/4m_final_project}
 \setcounter{secnumdepth}{4}
@@ -67,22 +68,11 @@
 \section{Introduction}
 \subsection{Abstract}
 
-The study of diabetes is vital in understanding the progression of the disease and identifying key predictors. Throughout this paper, we perform data analysis on the diabetes dataset, and will primarily focus on leveraging various statistical methods that we learned in STATS 4M03$\backslash$6M03: Multivariate Analysis. By using a variety of methods, our goal is to predict the onset of diabetes from detailed medical diagnostic measurements based on several contributing health factors, with the aim of uncovering patterns and relationships between various clinical and lifestyle factors. \\
+The study of diabetes is vital in understanding the progression of the disease and identifying key predictors. Throughout this paper, we perform data analysis on the diabetes dataset, primarily focusing on leveraging various statistical methods that we learned in STATS 4M03$\backslash$6M03: Multivariate Analysis. By using a variety of methods, our goal is to predict the onset of diabetes from detailed medical diagnostic measurements based on several contributing health factors --- with the aim of uncovering patterns and relationships between various clinical and lifestyle factors. Through this analysis, we hope to emphasize actionable insights for clinical decision-making and provide preventive strategies. 
 
-
-
-The analysis begins with summarizing the dataset to gain insights into distributions, central tendencies, and variances of key variables such as blood glucose levels, BMI, and insulin levels. Correlation analysis highlights interdependencies among factors, while hypothesis testing identifies statistically significant differences between diabetic and non-diabetic populations. Regression models, including linear and logistic regression, are utilized to predict outcomes and assess risk factors like age, family history, and lifestyle habits.
-
-This study aims to contribute to a deeper understanding of diabetes etiology and progression, emphasizing actionable insights for clinical decision-making and preventive strategies. The findings underscore the importance of statistical analysis in uncovering hidden trends and improving the accuracy of diabetes diagnosis and management. Future work may incorporate machine learning techniques for enhanced predictive modeling and broader applications in healthcare analytics.
-
-............
 \subsection{The Data}
 
-In this paper, we will study the diabetes dataset. \cite{Kaggles} which can be found here: \href{https://www.kaggle.com/datasets/hasibur013/diabetes-dataset}{Diabetes Dataset}
-
-The diabetes dataset contains 768 rows x 9 columns, representing various health diagnostic metrics for predicting diabetes. Each row corresponds to a unique patient record, with features capturing key medical attributes. Table 1 showcases each of the columns in the dataset and a description of each of the columns.
-
-We will be using R \cite{Rlang} as our main computing software
+In this paper, we will study the diabetes dataset. \cite{Kaggles} which can be found here: \href{https://www.kaggle.com/datasets/hasibur013/diabetes-dataset}{Diabetes Dataset}. The diabetes dataset contains 768 rows x 9 columns, representing various health diagnostic metrics for predicting diabetes. Each row corresponds to a unique patient record, with features capturing key medical attributes. Table~\ref{tab:DibetesTab} showcases each of the columns in the dataset and a description of each of the columns. We will be using R \cite{Rlang} as our main computing software
 
 \begin{table}[h!]
 	\centering
@@ -102,28 +92,91 @@ We will be using R \cite{Rlang} as our main computing software
 	\end{tabular}
 }
 	\caption{Description of the Diabetes Dataset}
+	\label{tab:DibetesTab}
 \end{table}
 
-.......
-
 \subsubsection{Exploratory Data Analysis (EDA)}
-In this paper, we used several EDA methods to analyze our dataset. These methods include: PCA \cite{kurita2019principal}, and a normal QQ-plot \cite{marden2004positions}. some text \cite{Lecture2}
-\paragraph{PCA}
 
-From figure 1, we observe that we should take 3 principle components.
+\begin{enumerate} 
+	
+	\item The diabetes dataset consists of 768 observations and 9 variables. All variables are integers, except for "BMI" and "DiabetesPedigreeFunction", which are labelled as numeric. This dataset does not consist of any N/A values or duplicated rows. 
+	
+	\item A summary statistics table was used to show the mean, median, minimum and maximum values of each variable, as well as quartiles. There are a lot more observations without diabetes than with diabetes. The ages listed in this dataset follow a right-skewed distribution, where majority of the individuals are aged 20-30. 
+	
+	\item "SkinThickness" is well correlated with "BMI" and "Insulin". "Glucose" is reasonably correlated with "Insulin", "BMI" and also "Age". "Age" is well correlated with "Pregnancies". 
+	
+	\item The dataset will be split into 2, where 1 will be the response variable, "Outcome". The other will consist of all the other variables, which are considered the predictor variables. All predictors should be used as they all are numeric/integer variables who are well/reasonably correlated with each other. 75 percent of the data will be used for training, whereas the rest will be used for testing. 
+	
+	\item For dimensionality reduction, we cannot use factor analysis since the dataset is not normally distributed. This can be confirmed by the shapiro test and normal QQ plot. For dimensionality reduction, we would use principal component analysis. We will use 3 principal components.\\  
+	
+	
+	
+	\begin{figure}[h!] 
+		
+		\centering 
+		
+		\fbox{\includegraphics[width=0.62\textwidth]{correlations2.png}} 
+		
+		\caption{Correlation Plot} 
+		
+		\label{fig:corplot} 
+		
+	\end{figure} 
+	
+	
+	
+	\begin{figure}[h!] 
+		
+		\centering 
+		
+		\fbox{\includegraphics[width=0.62\textwidth]{outcomes.png}} 
+		
+		\caption{Outcomes Plot} 
+		
+		\label{fig:barplot} 
+		
+	\end{figure} 
+	
+	
+	
+	\begin{figure}[h!] 
+		
+		\centering 
+		
+		\fbox{\includegraphics[width=0.62\textwidth]{ages.png}} 
+		
+		\caption{Ages Plot} 
+		
+		\label{fig:histplot} 
+		
+	\end{figure} 
+	
+	
+	
+	\begin{figure}[h!] 
+		
+		\centering 
+		
+		\fbox{\includegraphics[width=0.62\textwidth]{normal.png}} 
+		
+		\caption{Normality Checking Plot} 
+		
+		\label{fig:normalplot} 
+		
+	\end{figure} 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+\end{enumerate} 
 
-% \begin{figure}[h!]
-%      \includegraphics[width= 0.60\textwidth, height = 65mm]{eigenvalues_plot.png}\\
-%     \caption{Plot of the eigenvalues}
-% \end{figure}
+\end{document} 
 
-
-\paragraph{QQ-plot}
-
-From figure 2, we observe that the dataset is not normal
-
-
-.......
 \subsubsection{Data Preparation} 
 
 We write about the training and testing here, and how we used column 9 as a label. We also scaled the dataset.\\
@@ -161,44 +214,52 @@ The model was trained on 70\% of the data, leaving 30\% for testing. The binary 
 
 \section{Discussion}
 \subsection{Binary Logistic Regression}
-\begin{table}[H]
-\centering
-\resizebox{\textwidth}{!}{ % Resize to fit the width of the page
-\begin{tabular}{llllllll}
-\cline{1-5}
-\multicolumn{1}{|l|}{Coefficients:}             & \multicolumn{1}{l|}{Estimate}   & \multicolumn{1}{l|}{Std. Error} & \multicolumn{1}{l|}{z value} & \multicolumn{1}{l|}{Pr(\textgreater{}|z|)} &  &  &  \\ \cline{1-5}
-\multicolumn{1}{|l|}{(Intercept)}              & \multicolumn{1}{l|}{-8.4398695} & \multicolumn{1}{l|}{0.8176393}  & \multicolumn{1}{l|}{-10.322} & \multicolumn{1}{l|}{\textless 2e-16}       &  &  &  \\ \cline{1-5}
-\multicolumn{1}{|l|}{Pregnancies}              & \multicolumn{1}{l|}{0.1135092}  & \multicolumn{1}{l|}{0.0375672}  & \multicolumn{1}{l|}{3.021}   & \multicolumn{1}{l|}{0.00252}               &  &  &  \\ \cline{1-5}
-\multicolumn{1}{|l|}{Glucose}                  & \multicolumn{1}{l|}{0.0343876}  & \multicolumn{1}{l|}{0.0042392}  & \multicolumn{1}{l|}{8.112}   & \multicolumn{1}{l|}{4.99E-16}              &  &  &  \\ \cline{1-5}
-\multicolumn{1}{|l|}{BloodPressure}            & \multicolumn{1}{l|}{-0.0134342} & \multicolumn{1}{l|}{0.0059047}  & \multicolumn{1}{l|}{-2.275}  & \multicolumn{1}{l|}{0.0229}                &  &  &  \\ \cline{1-5}
-\multicolumn{1}{|l|}{SkinThickness}            & \multicolumn{1}{l|}{0.0098866}  & \multicolumn{1}{l|}{0.0083722}  & \multicolumn{1}{l|}{1.181}   & \multicolumn{1}{l|}{0.23765}               &  &  &  \\ \cline{1-5}
-\multicolumn{1}{|l|}{Insulin}                  & \multicolumn{1}{l|}{-0.0015283} & \multicolumn{1}{l|}{0.0009882}  & \multicolumn{1}{l|}{-1.546}  & \multicolumn{1}{l|}{0.122}                 &  &  &  \\ \cline{1-5}
-\multicolumn{1}{|l|}{BMI}                      & \multicolumn{1}{l|}{0.0776662}  & \multicolumn{1}{l|}{0.0174657}  & \multicolumn{1}{l|}{4.447}   & \multicolumn{1}{l|}{8.72E-06}              &  &  &  \\ \cline{1-5}
-\multicolumn{1}{|l|}{DiabetesPedigreeFunction} & \multicolumn{1}{l|}{0.8088779}  & \multicolumn{1}{l|}{0.332009}   & \multicolumn{1}{l|}{2.436}   & \multicolumn{1}{l|}{0.01484}               &  &  &  \\ \cline{1-5}
-\multicolumn{1}{|l|}{Age}                      & \multicolumn{1}{l|}{0.0297298}  & \multicolumn{1}{l|}{0.0109345}  & \multicolumn{1}{l|}{2.719}   & \multicolumn{1}{l|}{0.00655}               &  &  &  \\ \cline{1-5}
-\end{tabular}
+
+\begin{table}[h!]
+	\centering
+	\resizebox{0.80\textwidth}{!}{%
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		Coefficients & Estimate & Std. Error & Z-Value & Pr(>|Z|) \\ \hline
+		(Intercept) & -8.4398695 & 0.8176393 & -10.322 & < 2e-16 \\ \hline
+		Pregnancies & 0.1135092 & 0.0375672 & 3.021 & 0.00252 \\ \hline
+		Glucose & 0.0343876 & 0.0042392 & 8.112 & 4.99E-16 \\ \hline
+		BloodPressure & -0.0134342 & 0.0059047 & -2.275 & 0.0229 \\ \hline
+		SkinThickness & 0.0098866 & 0.0083722 & 1.181 & 0.23765 \\ \hline
+		Insulin & -0.0015283 & 0.0009882 & -1.546 & 0.122 \\ \hline
+		BMI & 0.0776662 & 0.0174657 & 4.447 & 8.72E-06 \\ \hline
+		DiabetesPedigreeFunction & 0.8088779 & 0.332009 & 2.436 & 0.01484 \\ \hline
+		Age & 0.0297298 & 0.0109345 & 2.719 & 0.00655 \\ \hline
+	\end{tabular}%
 }
-\caption{Binary Logistic Regression }
+	\caption{Binary Logistic Regression Output}
+	\label{tab:BinLogReg}
 \end{table}
-From Table 2, the coefficient for “SkinThickness” had the highest p-value (0.23765 > 0.05), indicating it was not significantly associated with the outcome. At this stage, the misclassification rate was 0.22396. Consequently, “SkinThickness” was removed from the model. After removing “SkinThickness,” the coefficient for “Insulin” had the highest p-value (0.24334 > 0.05), indicating it was also not significant. Then 'insulin' was excluded from the model.\\
-\begin{table}[H]
-\centering
-\resizebox{\textwidth}{!}{ % Resize to fit the width of the page
-\begin{tabular}{llllllll}
-\cline{1-5}
-\multicolumn{1}{|l|}{Coefficients:}            & \multicolumn{1}{l|}{Estimate}  & \multicolumn{1}{l|}{Std. Error} & \multicolumn{1}{l|}{z value} & \multicolumn{1}{l|}{Pr(\textgreater{}|z|)} &  &  &  \\ \cline{1-5}
-\multicolumn{1}{|l|}{(Intercept)}              & \multicolumn{1}{l|}{-8.304974} & \multicolumn{1}{l|}{0.80035}    & \multicolumn{1}{l|}{-10.377} & \multicolumn{1}{l|}{\textless 2e-16}       &  &  &  \\ \cline{1-5}
-\multicolumn{1}{|l|}{Pregnancies}              & \multicolumn{1}{l|}{0.115468}  & \multicolumn{1}{l|}{0.037168}   & \multicolumn{1}{l|}{3.107}   & \multicolumn{1}{l|}{0.00189}               &  &  &  \\ \cline{1-5}
-\multicolumn{1}{|l|}{Glucose}                  & \multicolumn{1}{l|}{0.03207}   & \multicolumn{1}{l|}{0.003896}   & \multicolumn{1}{l|}{8.232}   & \multicolumn{1}{l|}{\textless 2e-16}       &  &  &  \\ \cline{1-5}
-\multicolumn{1}{|l|}{BloodPressure}            & \multicolumn{1}{l|}{-0.012428} & \multicolumn{1}{l|}{0.005724}   & \multicolumn{1}{l|}{-2.171}  & \multicolumn{1}{l|}{0.02992}               &  &  &  \\ \cline{1-5}
-\multicolumn{1}{|l|}{BMI}                      & \multicolumn{1}{l|}{0.082539}  & \multicolumn{1}{l|}{0.0163}     & \multicolumn{1}{l|}{5.064}   & \multicolumn{1}{l|}{4.11E-07}              &  &  &  \\ \cline{1-5}
-\multicolumn{1}{|l|}{DiabetesPedigreeFunction} & \multicolumn{1}{l|}{0.808528}  & \multicolumn{1}{l|}{0.329062}   & \multicolumn{1}{l|}{2.457}   & \multicolumn{1}{l|}{0.01401}               &  &  &  \\ \cline{1-5}
-\multicolumn{1}{|l|}{Age}                      & \multicolumn{1}{l|}{0.029419}  & \multicolumn{1}{l|}{0.010701}   & \multicolumn{1}{l|}{2.749}   & \multicolumn{1}{l|}{0.00598}               &  &  &  \\ \cline{1-5}
-\end{tabular}
-}
-\caption{Binary Logistic Regression }
+
+
+
+From (Table~\ref{tab:BinLogReg}), the coefficient for “SkinThickness” had the highest p-value (0.23765 > 0.05), indicating it was not significantly associated with the outcome. At this stage, the misclassification rate was 0.22396. Consequently, “SkinThickness” was removed from the model. After removing “SkinThickness,” the coefficient for “Insulin” had the highest p-value (0.24334 > 0.05), indicating it was also not significant. Then 'insulin' was excluded from the model.\\
+
+\begin{table}[h!]
+	\centering
+	\resizebox{0.80\textwidth}{!}{%
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		Coefficients &  Estimate & Std.Error & Z-Value & Pr(>|Z|) \\ \hline
+		(Intercept) & -8.304974 & 0.80035 & -10.377 & <2e-16 \\ \hline
+		Pregnancies & 0.115468 & 0.037168 & 3.107 & 0.00189 \\ \hline
+		Glucose & 0.03207 & 0.003896 & 8.232 & <2e-16 \\ \hline
+		BloodPressure & -0.012428 & 0.005724 & -2.171 & 0.02992 \\ \hline
+		BMI & 0.082539 & 0.0163 & 5.064 & 4.11E-07 \\ \hline
+		DiabetesPredigreeFunction & 0.808528 & 0.329062 & 2.457 & 0.01401 \\ \hline
+		Age & 0.029419 & 0.010701  & 2.749 & 0.00598 \\ \hline
+	\end{tabular}%
+	}
+	\caption{Binary Logistic Regression Output Post-Adjustment}
+	\label{tab:BinLogRegA}
 \end{table}
-Table 3 demonstrates that all remaining variables exhibited p-values below 0.05, confirming their statistical significance. Additionally, the misclassification rate decrease to 0.21354, signaling enhanced model performance. Consequently, the variables ‘Pregnancies,’ ‘Glucose,’ ‘Blood Pressure,’ ‘BMI,’ ‘Diabetes Pedigree Function,’ and ‘Age’ were identified as having a significant influence on the “Outcome.” This suggests a strong association between these factors and the risk of diabetes in females.
+
+(Table~\ref{tab:BinLogRegA}) demonstrates that all remaining variables exhibited p-values below 0.05, confirming their statistical significance. Additionally, the misclassification rate decrease to 0.21354, signaling enhanced model performance. Consequently, the variables ‘Pregnancies,’ ‘Glucose,’ ‘Blood Pressure,’ ‘BMI,’ ‘Diabetes Pedigree Function,’ and ‘Age’ were identified as having a significant influence on the “Outcome.” This suggests a strong association between these factors and the risk of diabetes in females.
 
 \subsection{Boosting}
 
@@ -206,20 +267,24 @@ The model achieved an accuracy of 78.3\% on the test set, with an AUC of 0.85. T
 
 The feature importance plot (Figure~\ref{fig:importance}) reveals that glucose is the most significant predictor, followed by age, BMI, and genetic predisposition (DiabetesPedigreeFunction). These results align with established medical understanding of diabetes risk factors.
 
-% \begin{figure}[h!]
-% 	\centering
-% 	\begin{subfigure}{0.45\textwidth}
-% 		\fbox{\includegraphics[width=\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G1.png"}}
-% 		\caption{\centering{Figure 1. ROC Curve for Boosting Model}}
-% 		\label{fig:roc}
-% 	\end{subfigure}
-% 	\hfill
-% 	\begin{subfigure}{0.45\textwidth}
-% 		\fbox{\includegraphics[width=\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G2.png"}}
-% 		\caption{\centering{Figure 2. Feature Importance Plot}}
-% 		\label{fig:importance}
-% 	\end{subfigure}
-% \end{figure}
+\begin{figure}[h!]
+	\centering
+	% First figure
+	\begin{minipage}{0.47\textwidth}
+		\fbox{\includegraphics[width=\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G1.png"}}
+		\caption{ROC Curve for Boosting Model}
+		\label{fig:roc}
+	\end{minipage}
+	\hfill % Horizontal space between figures
+	% Second figure
+	\begin{minipage}{0.47\textwidth}
+		\centering
+		\fbox{\includegraphics[width=\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G2.png"}}
+		\caption{Feature Importance Plot}
+		\label{fig:importance}
+	\end{minipage}
+\end{figure}
+
 
 Boosting effectively identified significant predictors of diabetes, particularly glucose and BMI. However, the model's performance may be affected by missing data and the dataset's limited size. Future work could address these limitations by imputing missing values and validating the model on larger datasets. Overall, XGBoost proved to be a robust method for this binary classification problem.
 
