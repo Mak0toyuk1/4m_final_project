@@ -81,32 +81,6 @@ qqnorm(diabetes_data[,1])
 qqline(diabetes_data[,1])
 #################################################################################################################################
 
-
-
-# Random Forest Classifier
-# ###############################################################################################################################
-# set.seed(2024118)
-# train = sample (1: nrow(diabetes_data), nrow(diabetes_data)*0.75)
-# test = diabetes_data[-train,"Outcome"]
-
-# rf_tune = tune.randomForest(Outcome~., data = diabetes_data[train,], mtry = 1:8, ntree = 100*1:5, tunecontrol = tune.control(sampling = "cross",cross=5))
-# rf_tune
-
-# rf1=randomForest(Outcome~.,data=diabetes_data,subset=train,mtry=2, ntree = 200, importance=TRUE)
-# rf1
-# prediction1 = predict(rf1,diabetes_data[-train,],type="response")
-# prediction1 = round(prediction1, 0)
-# ConfusionMatrix<-table(test, prediction1)
-# ConfusionMatrix
-# MCR <- 1 - sum(diag(ConfusionMatrix)) / sum(ConfusionMatrix)
-# MCR
-
-# varImpPlot(rf1, main = "Variable Importance in Predicting Diabetes")
-# ###############################################################################################################################
-
-
-#################################################################################################################################
-
 #Testing Supervised Leanring Analysis Methods With Our Diabetes Data Set
 
 ##############################################################################################################################3##
@@ -197,7 +171,12 @@ testPred <- predict(xgbModel, testMatrix)
 testPredBinary <- ifelse(testPred > 0.5, 1, 0)
 
 # Evaluate model performance
-confusionMatrix(as.factor(testPredBinary), as.factor(testLabel))
+confMat <- confusionMatrix(as.factor(testPredBinary), as.factor(testLabel))
+print(confMat)
+
+# Compute Misclassification Rate (MCR)
+mcr <- 1 - sum(diag(confMat$table)) / sum(confMat$table)
+mcr
 
 # Calculate AUC
 rocCurve <- roc(testLabel, testPred)
@@ -227,6 +206,8 @@ xgb.plot.importance(importance, main = "Feature Importance Plot")
 1-classAgreement(tab_diabetes.rf)$diag 
 
 # Boosting (Add Boosting MCR Here)
+mcr <- 1 - sum(diag(confMat$table)) / sum(confMat$table)
+mcr
 
 #################################################################################################################################
 
