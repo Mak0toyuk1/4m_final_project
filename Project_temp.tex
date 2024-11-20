@@ -130,15 +130,15 @@ We write about the training and testing here, and how we used column 9 as a labe
 
 \section{Methodology}
 \subsection{Supervised learning Analysis} 
- In this section, we perform supervised learning analysis using Classification trees: k-Nearest Neighbours and the following ensembles methods: Bagging and Random Forests.\cite{zhou2012ensemble}
+ In this section, we perform supervised learning analysis using Classification trees: k-Nearest Neighbours and the following ensembles method: Random Forests Classifiers.\cite{zhou2012ensemble}
  
  \subsubsection{k-Nearest Neighbours}
 
- Supervised Learning Analysis Using k-Nearest Neighbours
+ Firstly, we executed the k-Nearest Neighbours algorithm \cite{peterson2009k} on our dataset. The algorithm is a non-parametric, supervised learning classifier that uses proximity to make classifications about the grouping of a dataset.
 
  \subsubsection{Random Forest Classifiers}
  
- Supervised Learning Analysis Using Random Forest Classifiers 
+ Also, we used the Random Forest Classifiers \cite{zhou2012ensemble} on our dataset. Random Forest classifiers is a bootstrapping sampling method that combines the results of multiple decision trees to draw on a conclusion. The algorithm \cite{Lecture16} is an extension of the bagging algorithm \cite{Lecture16} that creates uncorrelated decision trees, for each tree, a random sample of $\mathcal{M}$ is taken at each decision tree split.
 
 \subsection{Binary Logistic Regression}
 We performed a binary logistic regression analysis \cite{faraway2016extending}, a supervised learning method, to explore the relationship between various predictor variables and the binary response variable “Outcome,” indicating the presence or absence of diabetes. The initial model incorporated eight predictor variables: Pregnancies, Glucose, Blood Pressure, Skin Thickness, Insulin, BMI, Diabetes Pedigree Function, and Age. These variables were selected based on their potential relevance to diabetes risk, informed by existing domain knowledge.\\
