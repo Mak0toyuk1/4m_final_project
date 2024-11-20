@@ -43,6 +43,10 @@ summary(df)
 sum(is.na(df))
 # No N/A values
 
+# finds duplicated rows
+sum(duplicated(df))
+# No duplicated rows
+
 ###pair plot 
 ggpairs(df[,-c(9)], aes(colour=as.factor(Outcome), alpha=0.4),lower=list(continuous="points"),
         axisLabels="none", switch="both")
