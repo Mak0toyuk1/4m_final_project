@@ -223,6 +223,13 @@ The feature importance plot (Figure~\ref{fig:importance}) reveals that glucose i
 
 Boosting effectively identified significant predictors of diabetes, particularly glucose and BMI. However, the model's performance may be affected by missing data and the dataset's limited size. Future work could address these limitations by imputing missing values and validating the model on larger datasets. Overall, XGBoost proved to be a robust method for this binary classification problem.
 
+\subsection{k-Nearest Neighbours}
+
+% might want to include plot
+After executing the tune.knn() function in $5$-fold cross validation. We found that the best value for $k$ is $5$. Then, after inputting $k=3$ into the knn() function, we found that the MCR of the k-nearest neighbours is $0.2916667$.
+
+\subsection{Random Forest Classifiers}
+
 \section{Conclusion}
 
 \textbf{TEMPORARY, WILL IMPROVE LATER} Comparison between supervised and unsupervised learning analysis, which method performs better for this dataset, which version of machine learning analysis helps us draw better conclusions for our dataset etc. 
