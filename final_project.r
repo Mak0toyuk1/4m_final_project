@@ -5,10 +5,42 @@ diabetes_data <-read.csv("C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_proj
 
 library(ggplot2)
 library(dplyr)# Library for the Shapiro-Wilk test
+library(tidyverse)
 
 
+#################################################################################################################################
+
+#Libraries Needed For Supervised Learning Analysis 
+
+#################################################################################################################################
+library(randomForest)
+library(MASS)
+library(tree)
+library(e1071)
+library(class)
+library(rpart)
+library(rattle )
+library(gbm)
+library(caret)
+#################################################################################################################################
+#################################################################################################################################
+
+#Libraries Needed For Supervised Learning Analysis 
+
+#################################################################################################################################
+library(pgmm)
+library(dendextend)
+library(mixture)
+library(mclust)
+library(MixGHD)
+library(teigen)
+library(ggplot2)
+library(GGally)
+library(cluster)
+#################################################################################################################################
 
 #PCA # To be merged into EDA?
+
 #################################################################################################################################
 diabetes_pca<-prcomp(diabetes_data,scale=TRUE)
 diabetes_pca
@@ -81,20 +113,12 @@ varImpPlot(rf1, main = "Variable Importance in Predicting Diabetes")
 
 ##############################################################################################################################3##
 
-library(randomForest)
-library(MASS)
-library(tree)
-library(e1071)
-library(class)
-library(rpart)
-library(rattle )
-library(gbm)
-library(DAAG)
-library(caret)
+rm(list=ls())
 
 set.seed(2024118)
 
 diabetes_data <-read.csv("C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/diabetes_dataset.csv") # Safi's dataset
+head(diabetes_data)
 diabetes_data[,-9] <- scale(diabetes_data[,-9])
 diabetes_data$Outcome<-factor(diabetes_data$Outcome)
 
@@ -159,6 +183,8 @@ rf_diabetes_pred=predict(rf_diabetes,diabetes_data[-train.index,],type="class")
 tab_diabetes.rf<-table(diabetes_data[-train.index,9],rf_diabetes_pred)
 tab_diabetes.rf
 
+varImpPlot(rf_diabetes)
+
 #Compare all use MCR??
 
 # Classification Tree
@@ -186,22 +212,63 @@ classAgreement(diabetes_tab_bag)$crand
 classAgreement(tab_diabetes.rf)$crand
 #boosting 
 
+#################################################################################################################################
 
-
-
-
-
-
-
-
+# Performing Cluster Analysis Using Various Methods
 
 #################################################################################################################################
 
 
+# Perform cluster analysis using model based clustering I: fit Gaussian parsimonious mixture with G=1:5, k-means initialization
+
+diabetes_data[,-9] <- scale(diabetes_data[,-9]) #Scales all columns of the data except column 9: Outcome, which is categorical 
+true.label <- diabetes_data[,9] # gets the true labels for the diabetes dataset
+
+set.seed(2024118)
+
+diabetes_data <- as.matrix(diabetes_data) # specify z to be a matrix for GPCM
+
+# pairs(diabetes_data,col=true.label) 
+# ggpairs(diabetes_data, columns = 2:4,  aes(color = Outcome, alpha = 0.5))
+
+set.seed(2024118)
+
+### Fitting Gaussian mixture using gpcm(...)
+
+gpcm.out <- gpcm(diabetes_data,G=1:5, start = 2) # now gpcm fits.
+summary(gpcm.out)
+outcome.predict.gpcm <- gpcm.out$map # gets the vector of classifications for each observation
+tab_gpcm <- table(true.label,outcome.predict.gpcm )
+classAgreement(tab_gpcm)$crand
+best <- get_best_model(gpcm.out)
+best
+
+### Fitting  t Parsimonious mixture using tpcm(...) from mixture
+
+tpar = tpcm(diabetes_data, G=1:5,  start=2)
+
+#summary(tpar)
+outcome.predict.tpar <- tpar$map # gets the vector of classifications for each observation
+tab_t<- table(true.label,outcome.predict.tpar)
+classAgreement(tab_t )$crand
+best <- get_best_model(tpar)
+best
 
 
+### Fitting  mixtures of multivariate-t distributions using teigen(...) to the  data
 
-# Need to add tab.stuff to compare are the Supervised Learning Analysis Methods
+t.out <- teigen(x=diabetes_data,Gs=1:5,init="kmeans") # fits mixtures of multivariate-t distributions to the data
+outcome.predict.t <- t.out$classification # gets the vector of classifications for each observation
+tab_mt<- table(true.label,outcome.predict.t)
+classAgreement(tab_mt )$crand
+best <- summary(t.out)
+best
+
+### compare performance using ARI ??
+classAgreement(tab_gpcm )$crand
+classAgreement(tab_t )$crand
+classAgreement(tab_mt )$crand
+
 
 
 
