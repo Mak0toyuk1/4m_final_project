@@ -111,61 +111,61 @@ In this paper, we will study the diabetes dataset. \cite{Kaggles} which can be f
 	
 	
 	
-	\begin{figure}[h!] 
+	% \begin{figure}[h!] 
 		
-		\centering 
+	% 	\centering 
 		
-		\fbox{\includegraphics[width=0.62\textwidth]{correlations2.png}} 
+	% 	\fbox{\includegraphics[width=0.62\textwidth]{correlations2.png}} 
 		
-		\caption{Correlation Plot} 
+	% 	\caption{Correlation Plot} 
 		
-		\label{fig:corplot} 
+	% 	\label{fig:corplot} 
 		
-	\end{figure} 
+	% \end{figure} 
 	
 	
 	
-	\begin{figure}[h!] 
+	% \begin{figure}[h!] 
 		
-		\centering 
+	% 	\centering 
 		
-		\fbox{\includegraphics[width=0.62\textwidth]{outcomes.png}} 
+	% 	\fbox{\includegraphics[width=0.62\textwidth]{outcomes.png}} 
 		
-		\caption{Outcomes Plot} 
+	% 	\caption{Outcomes Plot} 
 		
-		\label{fig:barplot} 
+	% 	\label{fig:barplot} 
 		
-	\end{figure} 
+	% \end{figure} 
 	
 	
 	
-	\begin{figure}[h!] 
+	% \begin{figure}[h!] 
 		
-		\centering 
+	% 	\centering 
 		
-		\fbox{\includegraphics[width=0.62\textwidth]{ages.png}} 
+	% 	\fbox{\includegraphics[width=0.62\textwidth]{ages.png}} 
 		
-		\caption{Ages Plot} 
+	% 	\caption{Ages Plot} 
 		
-		\label{fig:histplot} 
+	% 	\label{fig:histplot} 
 		
-	\end{figure} 
+	% \end{figure} 
 	
 	
 	
-	\begin{figure}[h!] 
+	% \begin{figure}[h!] 
 		
-		\centering 
+	% 	\centering 
 		
-		\fbox{\includegraphics[width=0.62\textwidth]{normal.png}} 
+	% 	\fbox{\includegraphics[width=0.62\textwidth]{normal.png}} 
 		
-		\caption{Normality Checking Plot} 
+	% 	\caption{Normality Checking Plot} 
 		
-		\label{fig:normalplot} 
+	% 	\label{fig:normalplot} 
 		
-	\end{figure} 
+	% \end{figure} 
 		
-
+\end{enumerate}
  
 
 \subsubsection{Data Preparation} 
@@ -258,23 +258,23 @@ The model achieved an accuracy of 78.3\% on the test set, with an AUC of 0.85. T
 
 The feature importance plot (Figure~\ref{fig:importance}) reveals that glucose is the most significant predictor, followed by age, BMI, and genetic predisposition (DiabetesPedigreeFunction). These results align with established medical understanding of diabetes risk factors.
 
-\begin{figure}[h!]
-	\centering
-	% First figure
-	\begin{minipage}{0.47\textwidth}
-		\fbox{\includegraphics[width=\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G1.png"}}
-		\caption{ROC Curve for Boosting Model}
-		\label{fig:roc}
-	\end{minipage}
-	\hfill % Horizontal space between figures
-	% Second figure
-	\begin{minipage}{0.47\textwidth}
-		\centering
-		\fbox{\includegraphics[width=\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G2.png"}}
-		\caption{Feature Importance Plot}
-		\label{fig:importance}
-	\end{minipage}
-\end{figure}
+% \begin{figure}[h!]
+% 	\centering
+% 	% First figure
+% 	\begin{minipage}{0.47\textwidth}
+% 		\fbox{\includegraphics[width=\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G1.png"}}
+% 		\caption{ROC Curve for Boosting Model}
+% 		\label{fig:roc}
+% 	\end{minipage}
+% 	\hfill % Horizontal space between figures
+% 	% Second figure
+% 	\begin{minipage}{0.47\textwidth}
+% 		\centering
+% 		\fbox{\includegraphics[width=\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G2.png"}}
+% 		\caption{Feature Importance Plot}
+% 		\label{fig:importance}
+% 	\end{minipage}
+% \end{figure}
 
 
 Boosting effectively identified significant predictors of diabetes, particularly glucose and BMI. However, the model's performance may be affected by missing data and the dataset's limited size. Future work could address these limitations by imputing missing values and validating the model on larger datasets. Overall, XGBoost proved to be a robust method for this binary classification problem.
