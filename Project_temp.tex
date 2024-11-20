@@ -183,15 +183,15 @@ We write about the training and testing here, and how we used column 9 as a labe
 
 \section{Methodology}
 \subsection{Supervised learning Analysis} 
- In this section, we perform supervised learning analysis using Classification trees: k-Nearest Neighbours and the following ensembles methods: Bagging and Random Forests.\cite{zhou2012ensemble}
+ In this section, we perform supervised learning analysis using Classification trees: k-Nearest Neighbours and the following ensembles method: Random Forests Classifiers.\cite{zhou2012ensemble}
  
  \subsubsection{k-Nearest Neighbours}
 
- Supervised Learning Analysis Using k-Nearest Neighbours
+ Firstly, we executed the k-Nearest Neighbours algorithm \cite{peterson2009k} on our dataset. The algorithm is a non-parametric, supervised learning classifier that uses proximity to make classifications about the grouping of a dataset.
 
  \subsubsection{Random Forest Classifiers}
  
- Supervised Learning Analysis Using Random Forest Classifiers 
+ Also, we used the Random Forest Classifiers \cite{zhou2012ensemble} on our dataset. Random Forest classifiers is a bootstrapping sampling method that combines the results of multiple decision trees to draw on a conclusion. The algorithm \cite{Lecture16} is an extension of the bagging algorithm \cite{Lecture16} that creates uncorrelated decision trees, for each tree, a random sample of $\mathcal{M}$ is taken at each decision tree split.
 
 \subsection{Binary Logistic Regression}
 We performed a binary logistic regression analysis \cite{faraway2016extending}, a supervised learning method, to explore the relationship between various predictor variables and the binary response variable “Outcome,” indicating the presence or absence of diabetes. The initial model incorporated eight predictor variables: Pregnancies, Glucose, Blood Pressure, Skin Thickness, Insulin, BMI, Diabetes Pedigree Function, and Age. These variables were selected based on their potential relevance to diabetes risk, informed by existing domain knowledge.\\
@@ -287,6 +287,19 @@ The feature importance plot (Figure~\ref{fig:importance}) reveals that glucose i
 
 
 Boosting effectively identified significant predictors of diabetes, particularly glucose and BMI. However, the model's performance may be affected by missing data and the dataset's limited size. Future work could address these limitations by imputing missing values and validating the model on larger datasets. Overall, XGBoost proved to be a robust method for this binary classification problem.
+
+\subsection{k-Nearest Neighbours}
+
+% might want to include plot
+After executing the tune.knn() function in $5$-fold cross validation. We found that the best value for $k$ is $5$. Then, after inputting $k=3$ into the knn() function, we found that the MCR of the k-nearest neighbours is $0.2916667$.
+
+\subsection{Random Forest Classifiers}
+
+%we wanna include the Variable importance plot here
+After executing the tune.RandomForest() function in $5$-fold cross validation. We found that the best value for mtry is $4$ and the best value of ntree is $200$. Then, after inputting mtry $=4$ and ntree $=200$ into the RandomForest() function, we found that the MCR of the random forests is $0.28125$. \\
+Finally, we also observe that Glucose and BMI are the two most important variables according to the variable importance plot.
+
+
 
 \section{Conclusion}
 
