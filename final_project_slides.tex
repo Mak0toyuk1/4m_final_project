@@ -1,4 +1,5 @@
 \documentclass{beamer}
+\usepackage[authoryear]{natbib}
 %Information to be included in the title page:
 \title{Multivariate analysis of the diabetes dataset}
 \author{Tony Xu, Safi Khan, Rayyan Kazim, Xinyi Chen, Zesen Chen}
@@ -10,18 +11,64 @@
 \frame{\titlepage}
 
 \begin{frame}
-\frametitle{Sample frame title}
-This is some text in the first frame. This is some text in the first frame. This is some text in the first frame.
+\frametitle{Dataset}
+\begin{itemize}
+    \setlength\itemsep{3em}
+    \item We will study the dataset diabetes obtained from kaggles \cite{Kaggles}
+    \item The dataset contains $768$ rows and $9$ columns.
+    \item Each row corresponds to an unique patient record.
+    \item We will be using the R programming language.
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Sample frame title}
-    This is some text in the first frame. This is some text in the first frame. This is some text in the first frame.
+    \frametitle{Exploratory Data Analysis (EDA) and data preparation}
+    %insert all our tables
+    \begin{itemize}
+        \setlength\itemsep{1em}
+        \item All variables are integers except for "BMI" and "DiabetesPedigreeFunction"
+        \item "SkinThickness" is well correlated with "BMI" and "Insulin", "Age" is well correlated with "Pregnancies".
+        \item "Glucose" is reasonably correlated with "insulin", "BMI" and "Age".
+        \item The dataset will be split into 2, with the response variable being "outcome" and all other variables being predictor variables.
+        \item 75 percent of the data will be used for training, and the rest will be used for testing.
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Sample frame title}
-        This is some text in the first frame. This is some text in the first frame. This is some text in the first frame.
+    \frametitle{Methodologies - Supervised learning analysis}
+        \begin{itemize}
+            \setlength\itemsep{1em}
+            \item We used the methods: k-nearest neighbours \cite{peterson2009k},random forest classfiers \cite{zhou2012ensemble} and boosting \cite{chen2015xgboost} for our supervised learning analysis.
+            \item K-nearest neighbours \cite{peterson2009k} is a non-parametric, supervised learning classifiers that uses proximity to make classifications about the grouping of a dataset.
+            \item RandomForest classifiers \cite{zhou2012ensemble} is a bootstrapping sampling method that combines the results of multiple decision trees to draw on a conclusion.
+            \item Boosting \cite{chen2015xgboost} is similar to random forest, however it is not a bootstrapping sampling method. Boosting also uses the entire dataset, or some subsample thereof, to generate the ensemble.
+        \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Methodologies - Logistic regression}
+        \begin{itemize}
+            \setlength\itemsep{1em}
+            \item We will perform a binary logistic regression \cite{faraway2016extending} since our response variable "outcome" is binary.
+            \item The initial model incorporates all eight predictor variables.
+            \item The objective of this technique is to identify the most significant predictor using backwards elimination.
+            \item We want the final model to have only the most significant variables.
+        \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Discussions - Logistic regression}
+        \begin{itemize}
+            \setlength\itemsep{1em}
+            \item Removed variables "SkinThickness" and "insulin" from the model, since their p-values were greater than $0.05$.
+            \item We have evidence to suggest that "Pregnancies", "Glucose", "Blood Pressure", "BMI", "DiabetesPedigreeFunction" and "Age" have a significant influence over "outcome".
+        \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{References}
+    \bibliographystyle{apa} 
+    \bibliography{references}
 \end{frame}
 
 \end{document}
