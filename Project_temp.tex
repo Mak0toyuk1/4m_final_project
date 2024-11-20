@@ -82,6 +82,7 @@ In this paper, we will study the diabetes dataset. \cite{Kaggles} which can be f
 
 The diabetes dataset contains 768 rows x 9 columns, representing various health diagnostic metrics for predicting diabetes. Each row corresponds to a unique patient record, with features capturing key medical attributes. Table 1 showcases each of the columns in the dataset and a description of each of the columns.
 
+We will be using R \cite{Rlang} as our main computing software
 
 \begin{table}[h!]
 	\centering
@@ -140,13 +141,13 @@ We write about the training and testing here, and how we used column 9 as a labe
  Supervised Learning Analysis Using Random Forest Classifiers 
 
 \subsection{Binary Logistic Regression}
-We performed a binary logistic regression analysis, a supervised learning method, to explore the relationship between various predictor variables and the binary response variable “Outcome,” indicating the presence or absence of diabetes. The initial model incorporated eight predictor variables: Pregnancies, Glucose, Blood Pressure, Skin Thickness, Insulin, BMI, Diabetes Pedigree Function, and Age. These variables were selected based on their potential relevance to diabetes risk, informed by existing domain knowledge.\\
+We performed a binary logistic regression analysis \cite{faraway2016extending}, a supervised learning method, to explore the relationship between various predictor variables and the binary response variable “Outcome,” indicating the presence or absence of diabetes. The initial model incorporated eight predictor variables: Pregnancies, Glucose, Blood Pressure, Skin Thickness, Insulin, BMI, Diabetes Pedigree Function, and Age. These variables were selected based on their potential relevance to diabetes risk, informed by existing domain knowledge.\\
 \setlength{\parindent}{0pt}
 The objective of the analysis was to identify the most significant predictors using the backward elimination method, a stepwise regression technique. This approach began with a model including all predictors, subsequently removing variables in sequence based on the highest p-value exceeding 0.05. This systematic elimination of statistically insignificant predictors not only enhances the model’s interpretability but also minimizes the risk of overfitting, ensuring that the final model retains only variables with significant contributions to predicting the outcome.
 
 \subsection{Boosting}
 
-Boosting is an ensemble learning technique that combines multiple weak learners, typically decision trees, to create a strong predictive model. For this analysis, we used XGBoost (Extreme Gradient Boosting), which is efficient and optimized for large datasets, to predict the presence of diabetes based on clinical measurements.
+Boosting \cite{chen2015xgboost} \cite{friedman2001greedy} is an ensemble learning technique that combines multiple weak learners, typically decision trees, to create a strong predictive model. For this analysis, we used XGBoost (Extreme Gradient Boosting), which is efficient and optimized for large datasets, to predict the presence of diabetes based on clinical measurements.
 
 The model was trained on 70\% of the data, leaving 30\% for testing. The binary outcome variable (1 = diabetes, 0 = no diabetes) was predicted using features such as glucose levels, BMI, and age. Missing or zero values were present in some predictors (e.g., insulin), which could influence the model's performance.
 
@@ -205,20 +206,20 @@ The model achieved an accuracy of 78.3\% on the test set, with an AUC of 0.85. T
 
 The feature importance plot (Figure~\ref{fig:importance}) reveals that glucose is the most significant predictor, followed by age, BMI, and genetic predisposition (DiabetesPedigreeFunction). These results align with established medical understanding of diabetes risk factors.
 
-\begin{figure}[h!]
-	\centering
-	\begin{subfigure}{0.45\textwidth}
-		\fbox{\includegraphics[width=\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G1.png"}}
-		\caption{\centering{Figure 1. ROC Curve for Boosting Model}}
-		\label{fig:roc}
-	\end{subfigure}
-	\hfill
-	\begin{subfigure}{0.45\textwidth}
-		\fbox{\includegraphics[width=\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G2.png"}}
-		\caption{\centering{Figure 2. Feature Importance Plot}}
-		\label{fig:importance}
-	\end{subfigure}
-\end{figure}
+% \begin{figure}[h!]
+% 	\centering
+% 	\begin{subfigure}{0.45\textwidth}
+% 		\fbox{\includegraphics[width=\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G1.png"}}
+% 		\caption{\centering{Figure 1. ROC Curve for Boosting Model}}
+% 		\label{fig:roc}
+% 	\end{subfigure}
+% 	\hfill
+% 	\begin{subfigure}{0.45\textwidth}
+% 		\fbox{\includegraphics[width=\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G2.png"}}
+% 		\caption{\centering{Figure 2. Feature Importance Plot}}
+% 		\label{fig:importance}
+% 	\end{subfigure}
+% \end{figure}
 
 Boosting effectively identified significant predictors of diabetes, particularly glucose and BMI. However, the model's performance may be affected by missing data and the dataset's limited size. Future work could address these limitations by imputing missing values and validating the model on larger datasets. Overall, XGBoost proved to be a robust method for this binary classification problem.
 
