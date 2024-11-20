@@ -24,81 +24,102 @@ library(caret)
 
 diabetes_data <-read.csv("C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/diabetes_dataset.csv") # Safi's Path to the Data Set
 
-df=diabetes_data
+diabetes_data <- read.csv(data)
+
+
+df <- diabetes_data
 ## quick look
 head(df)
-attach(df)
+
+# Viewing variable/data types
 str(df)
+
+
+# Dimensions of the data
 dim(df)
 
 
-#quick summary
+#summary statistics
 summary(df)
+
 # finds the count of missing values 
 sum(is.na(df))
+# No N/A values
+
+# finds duplicated rows
+sum(duplicated(df))
+# No duplicated rows
 
 ###pair plot 
 ggpairs(df[,-c(9)], aes(colour=as.factor(Outcome), alpha=0.4),lower=list(continuous="points"),
         axisLabels="none", switch="both")
+
 ### bar plot 
+# one variable, Tells us how many people do and do not have diabetes
+outcomes <- df$Outcome
+outcomes <- as.factor(outcomes)
+plot(outcomes, xlab = "Diabetes", ylab = "Number of Individuals", 
+     main = "Diabetes Dataset Outcomes Distribution", col = "lightgreen")
 
-# one variable
 
-ggplot(df,aes(x=Outcome,y=Glucose,fill=factor(Outcome)))+
-  geom_bar(stat="identity")+theme_minimal()+
-  scale_fill_brewer(palette="RdPu",name="Outcome")+
-  theme_minimal()+ xlab("")+ylab("")
-# all variables
-gg <- melt(df,id="Outcome")   # df is your original table
-ggplot(gg, aes(x=variable, y=value, fill=factor(Outcome))) + 
-  stat_summary(fun.y=mean, geom="bar",position=position_dodge(1)) + 
-  theme_minimal()+
-  scale_fill_brewer(palette="PuBuGn",name="Outcome")+
-  theme_minimal()+ xlab("")+ylab("")
+# Age distribution
+ages <- df$Age
+hist(ages, xlab = "Ages", main = "Age Distribution in Diabetes Dataset", col="skyblue")
 
-#### pie chart
-data <- df %>% 
-  group_by(Outcome) %>% 
-  count() %>% 
-  ungroup() %>% 
-  mutate(per=`n`/sum(`n`)) %>% 
-  arrange(desc(Outcome))
-data$label <- scales::percent(data$per)
-ggplot(data=data)+
-  geom_bar(aes(x="", y=per, fill=Outcome), stat="identity", width = 1)+
-  coord_polar("y", start=0)+scale_fill_brewer("Outcome")+
-  theme_void()+
-  geom_text(aes(x=1, y = cumsum(per) - per/2, label=label)
-  )
 
-## correlation 
+## Correlations 
 
 data2<-df[,-c(9)]
 corr1<-cor(data2)
-corrplot(corr1, method = "circle",bg = "white", 
-         type="lower", order="hclust", tl.cex = 0.75, 
+corrplot(corr1, bg = "white", 
+         type="lower", tl.cex = 0.75, 
          tl.col="black", tl.srt = 45)
 
-## another corr
-ggcorr(data2, label = TRUE, label_size = 3,
-       label_round = 2, label_alpha = TRUE)
 
-### grid  plots 
-ggparcoord(, columns=1:8, groupColumn="Outcome")
+# Principal Component Analysis (PCA)
 
-a <- ggplot(diabetes_data, aes("Boxplot for all", Glucose)) +
-  xlab("")  + geom_boxplot() +
-  scale_x_discrete(breaks=NULL) 
-b <- ggplot(diabetes_data, aes(Outcome, Glucose)) + 
-  geom_boxplot() +  xlab("")
-grid.arrange(a, b, nrow=1, widths=c(1,2))
+diabetes_pca<-prcomp(diabetes_data,scale=TRUE)
+diabetes_pca
 
-a <- ggplot(diabetes_data, aes("Boxplot for all", Insulin)) +
-  xlab("")  + geom_boxplot() +
-  scale_x_discrete(breaks=NULL) 
-b <- ggplot(diabetes_data, aes(Outcome, Insulin)) + 
-  geom_boxplot() +  xlab("")
-grid.arrange(a, b, nrow=1, widths=c(1,2))
+summary(diabetes_pca) # 80 percent rules suggests that we should take 5 principle components.
+sum(diabetes_pca$sdev^2)
+
+eigenvals <- diabetes_pca$sdev^2
+eigenvals
+
+cumsum(eigenvals)/sum(eigenvals) # same as last line in summary(heptathlon_pca2) "Cumulative Proportion"
+
+plot(eigenvals,xlab="Principal Component",ylab="Eigenvalue",main="Eigenvalue vs. Principal) Component",type ="l" ) #Eigenvalues suggest that we should take 3 principle components.
+
+
+# Normality Test for Factor Analysis. 
+
+shapiro.test(diabetes_data$Pregnancies) # Not normal, p= 2.2e-16
+
+shapiro.test(diabetes_data$Glucose) # Not normal
+
+shapiro.test(diabetes_data$BloodPressure) # Not normal
+
+shapiro.test(diabetes_data$SkinThickness) # Not normal
+
+shapiro.test(diabetes_data$Insulin) # Not normal
+
+shapiro.test(diabetes_data$BMI) # Not normal
+
+shapiro.test(diabetes_data$Age) # Not normal
+
+# Using the normal QQ-Plot to confirm that the dataset is not normally distributed
+qqnorm(diabetes_data[,1])
+qqline(diabetes_data[,1])
+
+## Split Train/Test
+set.seed(2024118)
+train.index <- createDataPartition(diabetes_data$Outcome, p=.75, list = FALSE)
+y <- diabetes_data[train.index,9]
+x <- diabetes_data[train.index,-9]
+y <- as.factor(y)
+
+#############################################################################################################################################
 
 #word cloud plot
 library(kernlab)

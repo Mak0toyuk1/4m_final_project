@@ -299,10 +299,20 @@ classAgreement(tab_mt )$crand
 best <- summary(t.out)
 best
 
+### Fitting  Skew-t Parsimonious mixture using stpcm(...) from mixture
+
+stpar = stpcm(diabetes_data, G=1:5,  start=2)
+class.predict.stpar <- stpar$map # gets the vector of classifications for each observation
+tab_st<- table(true.label,class.predict.stpar )
+classAgreement(tab_st )$crand
+best <- get_best_model(stpar)
+best
+
 ### compare performance using ARI ??
 classAgreement(tab_gpcm )$crand
 classAgreement(tab_t )$crand
 classAgreement(tab_mt )$crand
+classAgreement(tab_st )$crand
 
 
 

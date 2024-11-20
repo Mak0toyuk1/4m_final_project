@@ -11,7 +11,7 @@ summary(data)
 data$Outcome <- as.factor(data$Outcome)
 
 set.seed(123)
-trainIndex <- createDataPartition(data$Outcome, p = 0.7, list = FALSE)
+trainIndex <- createDataPartition(data$Outcome, p = 0.75, list = FALSE)
 train_data <- data[trainIndex, ]
 test_data <- data[-trainIndex, ]
 
