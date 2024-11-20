@@ -22,10 +22,13 @@ library(rpart)
 library(rattle )
 library(gbm)
 library(caret)
+library(xgboost)
+library(pROC)
+library(ggplot2)
 #################################################################################################################################
 #################################################################################################################################
 
-#Libraries Needed For Supervised Learning Analysis 
+#Libraries Needed For Unupervised Learning (Clustering) Analysis 
 
 #################################################################################################################################
 library(pgmm)
@@ -85,31 +88,31 @@ qqline(diabetes_data[,1])
 
 
 
-Random Forest Classifier
+# Random Forest Classifier
+# #################################################################################################################################
+# set.seed(2024118)
+# train = sample (1: nrow(diabetes_data), nrow(diabetes_data)*0.75)
+# test = diabetes_data[-train,"Outcome"]
+
+# rf_tune = tune.randomForest(Outcome~., data = diabetes_data[train,], mtry = 1:8, ntree = 100*1:5, tunecontrol = tune.control(sampling = "cross",cross=5))
+# rf_tune
+
+# rf1=randomForest(Outcome~.,data=diabetes_data,subset=train,mtry=2, ntree = 200, importance=TRUE)
+# rf1
+# prediction1 = predict(rf1,diabetes_data[-train,],type="response")
+# prediction1 = round(prediction1, 0)
+# ConfusionMatrix<-table(test, prediction1)
+# ConfusionMatrix
+# MCR <- 1 - sum(diag(ConfusionMatrix)) / sum(ConfusionMatrix)
+# MCR
+
+# varImpPlot(rf1, main = "Variable Importance in Predicting Diabetes")
+# #################################################################################################################################
+
+
 #################################################################################################################################
-set.seed(2024118)
-train = sample (1: nrow(diabetes_data), nrow(diabetes_data)*0.75)
-test = diabetes_data[-train,"Outcome"]
 
-rf_tune = tune.randomForest(Outcome~., data = diabetes_data[train,], mtry = 1:8, ntree = 100*1:5, tunecontrol = tune.control(sampling = "cross",cross=5))
-rf_tune
-
-rf1=randomForest(Outcome~.,data=diabetes_data,subset=train,mtry=2, ntree = 200, importance=TRUE)
-rf1
-prediction1 = predict(rf1,diabetes_data[-train,],type="response")
-prediction1 = round(prediction1, 0)
-ConfusionMatrix<-table(test, prediction1)
-ConfusionMatrix
-MCR <- 1 - sum(diag(ConfusionMatrix)) / sum(ConfusionMatrix)
-MCR
-
-varImpPlot(rf1, main = "Variable Importance in Predicting Diabetes")
-#################################################################################################################################
-
-
-#################################################################################################################################
-
-#Testing all the Supervised Leanring Analysis Methods With Our Diabetes Data Set
+#Testing Supervised Leanring Analysis Methods With Our Diabetes Data Set
 
 ##############################################################################################################################3##
 
@@ -118,7 +121,7 @@ rm(list=ls())
 set.seed(2024118)
 
 diabetes_data <-read.csv("C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/diabetes_dataset.csv") # Safi's dataset
-head(diabetes_data)
+summary(diabetes_data)
 diabetes_data[,-9] <- scale(diabetes_data[,-9])
 diabetes_data$Outcome<-factor(diabetes_data$Outcome)
 
@@ -131,46 +134,22 @@ x <- diabetes_data[train.index,-9]
 y <- as.factor(y)
 
 
-# Classification Tree
-
-set.seed(2024118)
-diabetes_tree <- rpart(Outcome ~.,data = diabetes_data,subset=train.index,method="class")
-fancyRpartPlot(diabetes_tree)
-
-diabetes_tree_pred=predict(diabetes_tree,diabetes_data[-train.index,],type="class")
-diabetes_tab_tree<-table(diabetes_data[-train.index,9],diabetes_tree_pred)
-diabetes_tab_tree
-
-# KNN Classification
-# 5-fold CV
+# k-Nearest Neighbours Classification Using 5-Fold Cross Validation
 
 set.seed(2024118)
 
 diabetes_cv <- tune.knn(x, y, k = 1:10, tunecontrol = tune.control(sampling = "cross",cross=5))
-
 summary(diabetes_cv)
 plot(diabetes_cv)
 
 set.seed(2024118)
 diabetes_knn<-knn(train=x, test=diabetes_data[-train.index,-9], cl=y, k=3, prob=TRUE)
 diabetes_knn
-# ais_knn_pred=predict(ais_knn,ais[-train.index,],type="class")
 tab_diabetes.knn<-table(diabetes_data[-train.index,9],diabetes_knn)
 tab_diabetes.knn
 
-# Bagging 
+# Random Forest Classification  
 
-set.seed(2024118)
-diabetes_bag=randomForest(Outcome~.,data=diabetes_data,subset=train.index,mtry=8,importance=TRUE,type="class")
-diabetes_bag
-diabetes_bag_pred=predict(diabetes_bag,diabetes_data[-train.index,],type="class")
-diabetes_tab_bag<-table(diabetes_data[-train.index,9],diabetes_bag_pred)
-diabetes_tab_bag
-
-varImpPlot(diabetes_bag)
-# random forests 
-
-# Now use cross-validate 
 set.seed(2024118)
 diabetes_rf = tune.randomForest(Outcome~., data = diabetes_data[train.index,], mtry = 1:8,ntree=100*1:5,tunecontrol = tune.control(sampling = "cross",cross=5))
 summary(diabetes_rf)
@@ -184,6 +163,63 @@ tab_diabetes.rf<-table(diabetes_data[-train.index,9],rf_diabetes_pred)
 tab_diabetes.rf
 
 varImpPlot(rf_diabetes)
+
+# Boosting
+
+str(data)
+summary(data)
+
+data$Outcome <- as.factor(data$Outcome)
+
+set.seed(123)
+trainIndex <- createDataPartition(data$Outcome, p = 0.7, list = FALSE)
+train_data <- data[trainIndex, ]
+test_data <- data[-trainIndex, ]
+
+train_matrix <- as.matrix(train_data[, -ncol(train_data)])  # Exclude Outcome
+train_label <- as.numeric(as.character(train_data$Outcome))  # Convert Outcome to numeric
+test_matrix <- as.matrix(test_data[, -ncol(test_data)])  # Exclude Outcome
+test_label <- as.numeric(as.character(test_data$Outcome))
+
+dtrain <- xgb.DMatrix(data = train_matrix, label = train_label)
+dtest <- xgb.DMatrix(data = test_matrix, label = test_label)
+
+params <- list(
+  objective = "binary:logistic",  # Binary classification
+  eval_metric = "auc",           # Evaluation metric: AUC
+  max_depth = 6,                 # Maximum depth of a tree
+  eta = 0.1,                     # Learning rate
+  nthread = 2                    # Number of threads
+)
+
+set.seed(123)
+xgb_model <- xgb.train(
+  params = params,
+  data = dtrain,
+  nrounds = 100,               # Number of boosting rounds
+  watchlist = list(train = dtrain, test = dtest),
+  early_stopping_rounds = 10   # Early stopping
+)
+
+importance <- xgb.importance(model = xgb_model)
+print(importance)
+
+xgb.plot.importance(importance_matrix = importance)
+
+pred_probs <- predict(xgb_model, dtest)
+pred_classes <- ifelse(pred_probs > 0.5, 1, 0)
+
+conf_matrix <- confusionMatrix(as.factor(pred_classes), as.factor(test_label))
+auc_value <- auc(test_label, pred_probs)
+
+print(conf_matrix)
+cat("AUC:", round(auc_value, 4), "\n")
+
+roc_curve <- roc(test_label, pred_probs)
+plot(roc_curve, col = "blue", main = "ROC Curve for Boosting Model")
+
+
+
 
 #Compare all use MCR??
 
@@ -235,7 +271,7 @@ set.seed(2024118)
 
 ### Fitting Gaussian mixture using gpcm(...)
 
-gpcm.out <- gpcm(diabetes_data,G=1:5, start = 2) # now gpcm fits.
+gpcm.out <- gpcm(diabetes_data,G=1:8, start = 2) # now gpcm fits.
 summary(gpcm.out)
 outcome.predict.gpcm <- gpcm.out$map # gets the vector of classifications for each observation
 tab_gpcm <- table(true.label,outcome.predict.gpcm )
@@ -245,9 +281,8 @@ best
 
 ### Fitting  t Parsimonious mixture using tpcm(...) from mixture
 
-tpar = tpcm(diabetes_data, G=1:5,  start=2)
-
-#summary(tpar)
+tpar = tpcm(diabetes_data, G=1:8,  start=2)
+summary(tpar)
 outcome.predict.tpar <- tpar$map # gets the vector of classifications for each observation
 tab_t<- table(true.label,outcome.predict.tpar)
 classAgreement(tab_t )$crand

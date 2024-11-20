@@ -2,7 +2,7 @@
 \usepackage{lscape, xcolor}
 \usepackage{verbatim}
 \usepackage{amsmath,amsthm,amssymb}
-\usepackage{colonequals,color,multirow,natbib}
+\usepackage{colonequals,color,multirow}
 \usepackage{enumerate}
 \usepackage[sc]{mathpazo} % Use the Palatino font
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
@@ -29,6 +29,7 @@
 \usepackage{subcaption} % For subfigures with captions
 \captionsetup[subfigure]{labelformat=empty} % Removes the (a), (b) labels
 \usepackage{hyperref}
+\usepackage[authoryear]{natbib}
 \titleformat{\paragraph}
 {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
 \titlespacing*{\paragraph}
@@ -65,12 +66,9 @@
 \section{Introduction}
 \subsection{Abstract}
 
-The study of the diabetes dataset is vital in understanding the progression of the disease and identifying key predictors. Throughout this paper, we perform data analysis on the diabetes dataset using a variety of methods that we learned in STATS 4M03: Multivariate Analysis. 
-
-. how to predict diabetes onset from detailed medical diagnostic measurements based on several health factors. In our paper, we found\\
+The study of diabetes is vital in understanding the progression of the disease and identifying key predictors. Throughout this paper, we perform data analysis on the diabetes dataset, and will primarily focus on leveraging various statistical methods that we learned in STATS 4M03$\backslash$6M03: Multivariate Analysis. By using a variety of methods, our goal is to predict the onset of diabetes from detailed medical diagnostic measurements based on several contributing health factors, with the aim of uncovering patterns and relationships between various clinical and lifestyle factors. \\
 
 
- This research focuses on leveraging statistical tools to analyze diabetes-related data, aiming to uncover patterns and relationships between various clinical and lifestyle factors. Techniques such as descriptive statistics, correlation analysis, hypothesis testing, and regression modeling are employed to explore the dataset comprehensively.
 
 The analysis begins with summarizing the dataset to gain insights into distributions, central tendencies, and variances of key variables such as blood glucose levels, BMI, and insulin levels. Correlation analysis highlights interdependencies among factors, while hypothesis testing identifies statistically significant differences between diabetic and non-diabetic populations. Regression models, including linear and logistic regression, are utilized to predict outcomes and assess risk factors like age, family history, and lifestyle habits.
 
@@ -130,15 +128,15 @@ We write about the training and testing here, and how we used column 9 as a labe
 
 \section{Methodology}
 \subsection{Supervised learning Analysis} 
- In this section, we perform supervised learning analysis using the following methods: Classification trees, k-Nearest Neighbours, Bagging, and Random Forest Classifiers.\cite{zhou2012ensemble}
- 
- \subsubsection{Classification tree}
+ In this section, we perform supervised learning analysis using Classification trees: k-Nearest Neighbours and the following ensembles methods: Bagging and Random Forests.\cite{zhou2012ensemble}
  
  \subsubsection{k-Nearest Neighbours}
 
- \subsubsection{Bagging}
+ Supervised Learning Analysis Using k-Nearest Neighbours
 
  \subsubsection{Random Forest Classifiers}
+ 
+ Supervised Learning Analysis Using Random Forest Classifiers 
 
 \subsection{Binary Logistic Regression}
 We performed a binary logistic regression analysis, a supervised learning method, to explore the relationship between various predictor variables and the binary response variable “Outcome,” indicating the presence or absence of diabetes. The initial model incorporated eight predictor variables: Pregnancies, Glucose, Blood Pressure, Skin Thickness, Insulin, BMI, Diabetes Pedigree Function, and Age. These variables were selected based on their potential relevance to diabetes risk, informed by existing domain knowledge.\\
@@ -228,7 +226,7 @@ Boosting effectively identified significant predictors of diabetes, particularly
 \textbf{TEMPORARY, WILL IMPROVE LATER} Comparison between supervised and unsupervised learning analysis, which method performs better for this dataset, which version of machine learning analysis helps us draw better conclusions for our dataset etc. 
 
  \section{Bibliography}
- \bibliographystyle{unsrt}
+ \bibliographystyle{apa}
  \bibliography{references}
 
 \end{document}
