@@ -7,7 +7,6 @@ library(ggplot2)
 library(dplyr)# Library for the Shapiro-Wilk test
 library(tidyverse)
 
-
 #################################################################################################################################
 
 #Libraries Needed For Supervised Learning Analysis 
@@ -60,12 +59,8 @@ plot(eigenvals,xlab="Principal Component",ylab="Eigenvalue",main="Eigenvalue vs.
 #################################################################################################################################
 
 
-
-Normality Test
 #################################################################################################################################
-# Normality test for factor analysis. 
-
-# This is some text
+# Testing if the dataset is normally distributed 
 
 shapiro.test(diabetes_data$Pregnancies) # Not normal, p= 2.2e-16
 
@@ -89,7 +84,7 @@ qqline(diabetes_data[,1])
 
 
 # Random Forest Classifier
-# #################################################################################################################################
+# ###############################################################################################################################
 # set.seed(2024118)
 # train = sample (1: nrow(diabetes_data), nrow(diabetes_data)*0.75)
 # test = diabetes_data[-train,"Outcome"]
@@ -107,7 +102,7 @@ qqline(diabetes_data[,1])
 # MCR
 
 # varImpPlot(rf1, main = "Variable Importance in Predicting Diabetes")
-# #################################################################################################################################
+# ###############################################################################################################################
 
 
 #################################################################################################################################
@@ -166,62 +161,58 @@ varImpPlot(rf_diabetes)
 
 # Boosting
 
-str(data)
-summary(data)
+str(diabetes_data)
+summary(diabetes_data)
 
-data$Outcome <- as.factor(data$Outcome)
+diabetes_data$Outcome <- as.factor(diabetes_data$Outcome)
 
-set.seed(123)
-trainIndex <- createDataPartition(data$Outcome, p = 0.7, list = FALSE)
-train_data <- data[trainIndex, ]
-test_data <- data[-trainIndex, ]
+scaled_data <- diabetes_data
+scaled_data[, -ncol(diabetes_data)] <- scale(diabetes_data[, -ncol(diabetes_data)])
 
-train_matrix <- as.matrix(train_data[, -ncol(train_data)])  # Exclude Outcome
-train_label <- as.numeric(as.character(train_data$Outcome))  # Convert Outcome to numeric
-test_matrix <- as.matrix(test_data[, -ncol(test_data)])  # Exclude Outcome
-test_label <- as.numeric(as.character(test_data$Outcome))
+set.seed(2024118)  # Correct seed
+trainIndex <- createDataPartition(scaled_data$Outcome, p = 0.75, list = FALSE)
+trainData <- scaled_data[trainIndex, ]
+testData <- scaled_data[-trainIndex, ]
 
-dtrain <- xgb.DMatrix(data = train_matrix, label = train_label)
-dtest <- xgb.DMatrix(data = test_matrix, label = test_label)
+# Prepare data for XGBoost
+trainMatrix <- model.matrix(Outcome ~ . - 1, data = trainData)
+testMatrix <- model.matrix(Outcome ~ . - 1, data = testData)
+trainLabel <- as.numeric(as.character(trainData$Outcome))
+testLabel <- as.numeric(as.character(testData$Outcome))
 
-params <- list(
-  objective = "binary:logistic",  # Binary classification
-  eval_metric = "auc",           # Evaluation metric: AUC
-  max_depth = 6,                 # Maximum depth of a tree
-  eta = 0.1,                     # Learning rate
-  nthread = 2                    # Number of threads
+# Train the XGBoost model
+xgbModel <- xgboost(
+  data = trainMatrix,
+  label = trainLabel,
+  max_depth = 6,
+  eta = 0.1,
+  nrounds = 100,
+  objective = "binary:logistic",
+  eval_metric = "auc",
+  verbose = 0
 )
 
-set.seed(123)
-xgb_model <- xgb.train(
-  params = params,
-  data = dtrain,
-  nrounds = 100,               # Number of boosting rounds
-  watchlist = list(train = dtrain, test = dtest),
-  early_stopping_rounds = 10   # Early stopping
-)
+# Make predictions on the test set
+testPred <- predict(xgbModel, testMatrix)
+testPredBinary <- ifelse(testPred > 0.5, 1, 0)
 
-importance <- xgb.importance(model = xgb_model)
+# Evaluate model performance
+confusionMatrix(as.factor(testPredBinary), as.factor(testLabel))
+
+# Calculate AUC
+rocCurve <- roc(testLabel, testPred)
+aucValue <- auc(rocCurve)
+print(paste("AUC:", aucValue))
+
+# Plot ROC Curve
+plot(rocCurve, main = "ROC Curve for Boosting Model")
+
+# Feature importance
+importance <- xgb.importance(model = xgbModel, feature_names = colnames(trainMatrix))
 print(importance)
+xgb.plot.importance(importance, main = "Feature Importance Plot")
 
-xgb.plot.importance(importance_matrix = importance)
-
-pred_probs <- predict(xgb_model, dtest)
-pred_classes <- ifelse(pred_probs > 0.5, 1, 0)
-
-conf_matrix <- confusionMatrix(as.factor(pred_classes), as.factor(test_label))
-auc_value <- auc(test_label, pred_probs)
-
-print(conf_matrix)
-cat("AUC:", round(auc_value, 4), "\n")
-
-roc_curve <- roc(test_label, pred_probs)
-plot(roc_curve, col = "blue", main = "ROC Curve for Boosting Model")
-
-
-
-
-#Compare all use MCR??
+#Comparing All Methods Using MCR
 
 # Classification Tree
 1-classAgreement(diabetes_tab_tree)$diag
@@ -235,18 +226,7 @@ plot(roc_curve, col = "blue", main = "ROC Curve for Boosting Model")
 # Random Rorest
 1-classAgreement(tab_diabetes.rf)$diag 
 
-
-#Compare all use ARI??
-#tree
-classAgreement(diabetes_tab_tree)$crand
-
-#knn
-classAgreement(tab_diabetes.knn)$crand
-#bagging 
-classAgreement(diabetes_tab_bag)$crand
-# random forest
-classAgreement(tab_diabetes.rf)$crand
-#boosting 
+# Boosting (Add Boosting MCR Here)
 
 #################################################################################################################################
 
