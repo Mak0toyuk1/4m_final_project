@@ -1,5 +1,6 @@
 \documentclass{beamer}
 \usepackage[authoryear]{natbib}
+\usepackage{graphicx}
 %Information to be included in the title page:
 \title{Multivariate analysis of the diabetes dataset}
 \author{Tony Xu, Safi Khan, Rayyan Kazim, Xinyi Chen, Zesen Chen}
@@ -63,6 +64,33 @@
             \item Removed variables "SkinThickness" and "insulin" from the model, since their p-values were greater than $0.05$.
             \item We have evidence to suggest that "Pregnancies", "Glucose", "Blood Pressure", "BMI", "DiabetesPedigreeFunction" and "Age" have a significant influence over "outcome".
         \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Discussions - k-nearest neighbours}
+    %insert the plot here.
+        \begin{itemize}
+            \setlength\itemsep{1em}
+            \item 5-fold cross validation suggests that the best value for $k$ is $k=3$
+            \item Executing the knn() function with $k=3$, we obtain that the MCR of the k-nearest neighbours is $0.2916667$
+        \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Discussions - Random forests}
+    %insert the variable importance plot here.
+        \begin{itemize}
+            \setlength\itemsep{1em}
+            \item 5-fold cross validation suggests that the best value for mtry is $4$ and the best value for ntree is $200$.
+            \item Executing the RandomForest() function with mtry $=4$ and ntree $=200$, we obtain that the MCR of the RandomForest is $0.28125$.
+            \item We observe that Glucose and BMI are the two most important variables.
+        \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Conclusion}
+    %insert the variable importance plot here.
+        This section is under construction.
 \end{frame}
 
 \begin{frame}
