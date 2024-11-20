@@ -42,12 +42,13 @@ ggpairs(df[,-c(9)], aes(colour=as.factor(Outcome), alpha=0.4),lower=list(continu
         axisLabels="none", switch="both")
 ### bar plot 
 
-# one variable
+# one variable, Tells us how many people do and do not have diabetes
 
 ggplot(df,aes(x=Outcome,y=Glucose,fill=factor(Outcome)))+
   geom_bar(stat="identity")+theme_minimal()+
   scale_fill_brewer(palette="RdPu",name="Outcome")+
   theme_minimal()+ xlab("")+ylab("")
+
 # all variables
 gg <- melt(df,id="Outcome")   # df is your original table
 ggplot(gg, aes(x=variable, y=value, fill=factor(Outcome))) + 
