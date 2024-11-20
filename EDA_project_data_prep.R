@@ -109,6 +109,13 @@ shapiro.test(diabetes_data$Age) # Not normal
 qqnorm(diabetes_data[,1])
 qqline(diabetes_data[,1])
 
+## Split Train/Test
+set.seed(2024118)
+train.index <- createDataPartition(diabetes_data$Outcome, p=.75, list = FALSE)
+y <- diabetes_data[train.index,9]
+x <- diabetes_data[train.index,-9]
+y <- as.factor(y)
+
 #############################################################################################################################################
 
 #word cloud plot
