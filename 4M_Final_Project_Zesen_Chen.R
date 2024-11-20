@@ -13,7 +13,7 @@ data$Outcome <- as.factor(data$Outcome)
 scaled_data <- data
 scaled_data[, -ncol(data)] <- scale(data[, -ncol(data)])
 
-set.seed(2024118)  # Correct seed
+set.seed(2024118)
 trainIndex <- createDataPartition(scaled_data$Outcome, p = 0.75, list = FALSE)
 trainData <- scaled_data[trainIndex, ]
 testData <- scaled_data[-trainIndex, ]
@@ -41,7 +41,12 @@ testPred <- predict(xgbModel, testMatrix)
 testPredBinary <- ifelse(testPred > 0.5, 1, 0)
 
 # Evaluate model performance
-confusionMatrix(as.factor(testPredBinary), as.factor(testLabel))
+confMat <- confusionMatrix(as.factor(testPredBinary), as.factor(testLabel))
+print(confMat)
+
+# Compute Misclassification Rate (MCR)
+mcr <- 1 - sum(diag(confMat$table)) / sum(confMat$table)
+print(paste("Misclassification Rate (MCR):", round(mcr, 4)))
 
 # Calculate AUC
 rocCurve <- roc(testLabel, testPred)
