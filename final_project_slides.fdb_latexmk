@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex final_project_slides"] 1732137557.26671 "final_project_slides.aux" "final_project_slides.bbl" "final_project_slides" 1732137559.08283 0
+["bibtex final_project_slides"] 1732146819.13759 "final_project_slides.aux" "final_project_slides.bbl" "final_project_slides" 1732146874.55698 0
   "./apa.bst" 1732121100.92997 23582 e3c8338eb1efb7432441aa8861285f53 ""
   "./references.bib" 1732130359.54997 2471 980b360b389eff4ce04a3e9b9ebcc2dc ""
-  "final_project_slides.aux" 1732137558.77457 2453 d307b632379c54ae686a3a086e822818 "pdflatex"
+  "final_project_slides.aux" 1732146874.33202 2582 06cdd8f0f0d7e6e5b24368c8310256cb "pdflatex"
   (generated)
   "final_project_slides.bbl"
   "final_project_slides.blg"
   (rewritten before read)
-["pdflatex"] 1732137557.3504 "/home/evo/4m_final_project/final_project_slides.tex" "final_project_slides.pdf" "final_project_slides" 1732137559.08308 0
-  "/home/evo/4m_final_project/final_project_slides.tex" 1732137554.80123 4697 1e060f2bca79a44483a975d91c921bb6 ""
+["pdflatex"] 1732146873.11312 "/home/evo/4m_final_project/final_project_slides.tex" "final_project_slides.pdf" "final_project_slides" 1732146874.55715 0
+  "/home/evo/4m_final_project/final_project_slides.tex" 1732146872.90869 4765 2817dd69a775c8f03ec8baa1cff4fb0a ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1727349926 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1727349926 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1727349926 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -198,11 +198,11 @@
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1727349926 41588 b43d3e860a4f94167ee1e725ff526a72 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1731622369.07853 5311862 0722f54309a88f705d8cb84897a212d3 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1731623172 7113021 24703c095029a2167b29e9cd300be340 ""
-  "final_project_slides.aux" 1732137558.77457 2453 d307b632379c54ae686a3a086e822818 "pdflatex"
-  "final_project_slides.bbl" 1732137557.34123 937 e196b92662e677cc14a2927ae25e16ac "bibtex final_project_slides"
-  "final_project_slides.nav" 1732137558.77457 1287 f2bcf36d61c9f15832f3428b1e9c6561 "pdflatex"
-  "final_project_slides.out" 1732137558.77457 93 aea4b6a8ae45636c75679c2f0dfa4493 "pdflatex"
-  "final_project_slides.tex" 1732137554.80123 4697 1e060f2bca79a44483a975d91c921bb6 ""
+  "final_project_slides.aux" 1732146874.33202 2582 06cdd8f0f0d7e6e5b24368c8310256cb "pdflatex"
+  "final_project_slides.bbl" 1732146819.19876 1074 602bd0ae7535dc86e056812873571c27 "bibtex final_project_slides"
+  "final_project_slides.nav" 1732146874.33202 1287 f2bcf36d61c9f15832f3428b1e9c6561 "pdflatex"
+  "final_project_slides.out" 1732146874.33202 93 aea4b6a8ae45636c75679c2f0dfa4493 "pdflatex"
+  "final_project_slides.tex" 1732146872.90869 4765 2817dd69a775c8f03ec8baa1cff4fb0a ""
   (generated)
   "final_project_slides.aux"
   "final_project_slides.log"

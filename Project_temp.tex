@@ -116,45 +116,45 @@ Figure~\ref{fig:corplot} illustrates the relatively high correlation between "Sk
 
 The true label of this dataset is "Outcome," whereas the other variables are considered the predictors. Since our dataset is not that large, we determined that we should use all of the predictors as they all show reasonably high correlation with each other. 75\% of the data will be used for training, whereas the rest will be used for testing.
 
-We cannot apply factor analysis on our dataset as it is not normally distributed. This can be confirmed by the Shapiro-Wilk test and normal QQ plot. For dimensionality reduction, we would use principal component analysis. We will use 3 principal components.
+We cannot apply factor analysis on our dataset as it is not normally distributed. This can be confirmed by the Shapiro-Wilk test \cite{Rlang} and normal QQ plot \cite{Rlang}. For dimensionality reduction, we would use principal component analysis. We will use 3 principal components.
 
-\begin{figure}[h!]
-	\centering
-	% First figure
-	\begin{minipage}{0.48\textwidth}
-		\fbox{{\includegraphics[width=\textwidth]{ages.png}}}
-		\caption{Age Distribution of the Dataset} 
-		\label{fig:ageplot}
-	\end{minipage}
-	\hfill % Horizontal space between figures
-	% Second figure
-	\centering
-	\begin{minipage}{0.48\textwidth}
-		\centering
-		\fbox{\includegraphics[width=\textwidth]{outcomes.png}} 
-		\caption{Distribution of Outcomes} 
-		\label{fig:outcomeplot}
-	\end{minipage}
-\end{figure}
+% \begin{figure}[h!]
+% 	\centering
+% 	% First figure
+% 	\begin{minipage}{0.48\textwidth}
+% 		\fbox{{\includegraphics[width=\textwidth]{ages.png}}}
+% 		\caption{Age Distribution of the Dataset} 
+% 		\label{fig:ageplot}
+% 	\end{minipage}
+% 	\hfill % Horizontal space between figures
+% 	% Second figure
+% 	\centering
+% 	\begin{minipage}{0.48\textwidth}
+% 		\centering
+% 		\fbox{\includegraphics[width=\textwidth]{outcomes.png}} 
+% 		\caption{Distribution of Outcomes} 
+% 		\label{fig:outcomeplot}
+% 	\end{minipage}
+% \end{figure}
 
-\begin{figure}[h!]
-	\centering
-	% First figure
-	\begin{minipage}{0.48\textwidth}
-		\fbox{{\includegraphics[width=\textwidth]{correlations2.png}}}
-		\caption{Correlation of Variables} 
-		\label{fig:corplot}
-	\end{minipage}
-	\hfill % Horizontal space between figures
-	% Second figure
-	\centering
-	\begin{minipage}{0.48\textwidth}
-		\centering
-		\fbox{\includegraphics[width=\textwidth]{normal.png}} 
-		\caption{Normal QQ-Plot} 
-		\label{fig:qqplot}
-	\end{minipage}
-\end{figure}
+% \begin{figure}[h!]
+% 	\centering
+% 	% First figure
+% 	\begin{minipage}{0.48\textwidth}
+% 		\fbox{{\includegraphics[width=\textwidth]{correlations2.png}}}
+% 		\caption{Correlation of Variables} 
+% 		\label{fig:corplot}
+% 	\end{minipage}
+% 	\hfill % Horizontal space between figures
+% 	% Second figure
+% 	\centering
+% 	\begin{minipage}{0.48\textwidth}
+% 		\centering
+% 		\fbox{\includegraphics[width=\textwidth]{normal.png}} 
+% 		\caption{Normal QQ-Plot} 
+% 		\label{fig:qqplot}
+% 	\end{minipage}
+% \end{figure}
 		
 \subsubsection{Data Preparation} 
 
@@ -251,12 +251,12 @@ Table~\ref{tab:BinLogRegA} contains the output from the Reduced Binary Logistic 
 
 The model achieved an accuracy of 80.5\% on the test set, with an AUC of 0.87. The AUC, derived from the ROC curve (Figure~\ref{fig:roc}), indicates that the model performs well in distinguishing between diabetic and non-diabetic individuals.
 
-\begin{figure}[h!]
-	\centering
-	\fbox{\includegraphics[width=0.7\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G1.png"}}
-	\caption{ROC Curve for Boosting Model}
-	\label{fig:roc}
-\end{figure}
+% \begin{figure}[h!]
+% 	\centering
+% 	\fbox{\includegraphics[width=0.7\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G1.png"}}
+% 	\caption{ROC Curve for Boosting Model}
+% 	\label{fig:roc}
+% \end{figure}
 
 The feature importance plot (Figure~\ref{fig:importance}) reveals that glucose is the most significant predictor, followed by age, BMI, and genetic predisposition (DiabetesPedigreeFunction). These results align with established medical understanding of diabetes risk factors.
 
@@ -278,12 +278,12 @@ The feature importance plot (Figure~\ref{fig:importance}) reveals that glucose i
 % 	\end{minipage}
 % \end{figure}
 
-\begin{figure}[h!]
-	\centering
-	\fbox{\includegraphics[width=0.7\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G2.png"}}
-	\caption{Feature Importance Plot}
-	\label{fig:importance}
-\end{figure}
+% \begin{figure}[h!]
+% 	\centering
+% 	\fbox{\includegraphics[width=0.7\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G2.png"}}
+% 	\caption{Feature Importance Plot}
+% 	\label{fig:importance}
+% \end{figure}
 
 
 Boosting effectively identified significant predictors of diabetes, particularly glucose and BMI. However, the model's performance may be affected by missing data and the dataset's limited size. Future work could address these limitations by imputing missing values and validating the model on larger datasets. Overall, XGBoost proved to be a robust method for this binary classification problem.
@@ -293,12 +293,12 @@ Boosting effectively identified significant predictors of diabetes, particularly
 % might want to include plot
 After running tune.knn() with $5$-fold cross validation to get the parameters for the k-nearest neighbours algorithm (k-NN), we found that the best value for $k$ is $3$. After inputting $k=3$ and running the k-NN algorithm, we found that the MCR given by k-NN classification is $0.2916667$, i.e. $~71\%$ of the individuals with or without diabetes were correctly classified.
 
-\begin{figure}[h!]
-	\centering
-	\fbox{\includegraphics[width=0.7\textwidth]{knnplot.png}} 
-	\caption{Output Plot From k-NN Classification} 
-	\label{fig:KNNPlot}
-\end{figure}
+% \begin{figure}[h!]
+% 	\centering
+% 	\fbox{\includegraphics[width=0.7\textwidth]{knnplot.png}} 
+% 	\caption{Output Plot From k-NN Classification} 
+% 	\label{fig:KNNPlot}
+% \end{figure}
 
 \subsection{Random Forest Classifiers}
 
@@ -308,13 +308,13 @@ After running tune.RandomForest() with $5$-fold cross validation to get the best
 After tuning and inputting $\mathcal{M}$ = $4$ and $M$ = $200$ into the random forest algorithm, we found that the MCR given by random forest classification is $0.28125$, i.e. $~72\%$ of the the individuals with or without diabetes were correctly classified.
 Finally, we also observe that Glucose and BMI are the two most important variables according to the variable importance plot.
 
-\begin{figure}[h!]
-	\centering
-	% First figure
-	\fbox{{\includegraphics[width=0.7\textwidth]{MeanDecreaseAccuracyPlotForRandomForest.png}}}
-	\caption{MeanDecreaseAccuracy Plot from Random Forest} 
-	\label{fig:RFPlot}
-\end{figure}
+% \begin{figure}[h!]
+% 	\centering
+% 	% First figure
+% 	\fbox{{\includegraphics[width=0.7\textwidth]{MeanDecreaseAccuracyPlotForRandomForest.png}}}
+% 	\caption{MeanDecreaseAccuracy Plot from Random Forest} 
+% 	\label{fig:RFPlot}
+% \end{figure}
 
 
 \section{Conclusion}
