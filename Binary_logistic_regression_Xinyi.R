@@ -49,7 +49,7 @@ train = sample (1: nrow(diabetes_data), nrow(diabetes_data)*0.75)
 diabetes_data.train= diabetes_data[train,]
 diabetes_data.test=diabetes_data[-train,"Outcome"]
 # fit bin. log. reg
-diabetes_logreg <- glm(Outcome ~ Pregnancies + Glucose + BMI, data = diabetes_data.train, family = binomial("logit"))
+diabetes_logreg <- glm(Outcome ~ Pregnancies + Glucose + BMI + DiabetesPedigreeFunction, data = diabetes_data.train, family = binomial("logit"))
 summary(diabetes_logreg)
 # Predict and convert to binary outcomes
 class.pred <- ifelse(predict(diabetes_logreg, newdata = diabetes_data[-train, ], type = "response") > 0.5, 1, 0)
@@ -60,4 +60,5 @@ MCR <- 1 - sum(diag(conf_matrix)) / sum(conf_matrix)
 MCR
 CR <- sum(diag(conf_matrix)) / sum(conf_matrix)
 CR
+
 
