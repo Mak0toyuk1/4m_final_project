@@ -22,6 +22,34 @@ library(kernlab)
 library(vscc)
 library(caret)
 
+# Testing if the dataset is normally distributed 
+
+#################################################################################################################################
+
+shapiro.test(diabetes_data$Pregnancies) # Not normal, p= 2.2e-16
+
+shapiro.test(diabetes_data$Glucose) # Not normal
+
+shapiro.test(diabetes_data$BloodPressure) # Not normal
+
+shapiro.test(diabetes_data$SkinThickness) # Not normal
+
+shapiro.test(diabetes_data$Insulin) # Not normal
+
+shapiro.test(diabetes_data$BMI) # Not normal
+
+shapiro.test(diabetes_data$Age) # Not normal
+
+# Using the normal QQ-Plot to confirm that the dataset is not normally distributed
+qqnorm(diabetes_data[,1])
+qqline(diabetes_data[,1])
+#################################################################################################################################
+
+#Testing Supervised Leanring Analysis Methods With Our Diabetes Data Set
+
+#################################################################################################################################
+
+
 diabetes_data <-read.csv("C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/diabetes_dataset.csv") # Safi's Path to the Data Set
 
 diabetes_data <- read.csv(data)

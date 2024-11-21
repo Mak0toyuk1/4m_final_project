@@ -2,16 +2,18 @@
 
 diabetes_data <-read.csv("/home/evo/Mcmaster/4m03/R code/diabetes_dataset.csv") # Tony's dataset
 diabetes_data <-read.csv("C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/diabetes_dataset.csv") # Safi's dataset
+diabetes_data <- read.csv("/Users/xinyichen/Desktop/diabetes_dataset.csv") #Xiyi's dataset
+diabetes_data <- read.csv("C:/Users/10106/Downloads/diabetes_dataset.csv") #Zensen's dataset
 
 library(ggplot2)
 library(dplyr)# Library for the Shapiro-Wilk test
 library(tidyverse)
 
-#################################################################################################################################
+###############################################################################################################################
 
 #Libraries Needed For Supervised Learning Analysis 
 
-#################################################################################################################################
+###############################################################################################################################
 library(randomForest)
 library(MASS)
 library(tree)
@@ -24,12 +26,12 @@ library(caret)
 library(xgboost)
 library(pROC)
 library(ggplot2)
-#################################################################################################################################
-#################################################################################################################################
+###############################################################################################################################
+###############################################################################################################################
 
 #Libraries Needed For Unupervised Learning (Clustering) Analysis 
 
-#################################################################################################################################
+###############################################################################################################################
 library(pgmm)
 library(dendextend)
 library(mixture)
@@ -39,57 +41,10 @@ library(teigen)
 library(ggplot2)
 library(GGally)
 library(cluster)
-#################################################################################################################################
-
-#PCA # To be merged into EDA?
-
-#################################################################################################################################
-diabetes_pca<-prcomp(diabetes_data,scale=TRUE)
-diabetes_pca
-
-summary(diabetes_pca) # 80 percent rules suggests that we should take 5 principle components.
-sum(diabetes_pca$sdev^2)
-
-eigenvals <- diabetes_pca$sdev^2
-eigenvals
-
-cumsum(eigenvals)/sum(eigenvals) # same as last line in summary(heptathlon_pca2) "Cumulative Proportion"
-
-plot(eigenvals,xlab="Principal Component",ylab="Eigenvalue",main="Eigenvalue vs. Principal) Component",type ="l" ) #Eigenvalues suggest that we should take 3 principle components.
-#################################################################################################################################
-
-
-#################################################################################################################################
-# Testing if the dataset is normally distributed 
-
-shapiro.test(diabetes_data$Pregnancies) # Not normal, p= 2.2e-16
-
-shapiro.test(diabetes_data$Glucose) # Not normal
-
-shapiro.test(diabetes_data$BloodPressure) # Not normal
-
-shapiro.test(diabetes_data$SkinThickness) # Not normal
-
-shapiro.test(diabetes_data$Insulin) # Not normal
-
-shapiro.test(diabetes_data$BMI) # Not normal
-
-shapiro.test(diabetes_data$Age) # Not normal
-
-# Using the normal QQ-Plot to confirm that the dataset is not normally distributed
-qqnorm(diabetes_data[,1])
-qqline(diabetes_data[,1])
-#################################################################################################################################
-
-#Testing Supervised Leanring Analysis Methods With Our Diabetes Data Set
-
-##############################################################################################################################3##
-
-rm(list=ls())
+###############################################################################################################################
 
 set.seed(2024118)
 
-diabetes_data <-read.csv("C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/diabetes_dataset.csv") # Safi's dataset
 summary(diabetes_data)
 diabetes_data[,-9] <- scale(diabetes_data[,-9])
 diabetes_data$Outcome<-factor(diabetes_data$Outcome)
@@ -117,7 +72,7 @@ diabetes_knn
 tab_diabetes.knn<-table(diabetes_data[-train.index,9],diabetes_knn)
 tab_diabetes.knn
 
-# Random Forest Classification  
+# Random Forest Classification
 
 set.seed(2024118)
 diabetes_rf = tune.randomForest(Outcome~., data = diabetes_data[train.index,], mtry = 1:8,ntree=100*1:5,tunecontrol = tune.control(sampling = "cross",cross=5))
@@ -209,72 +164,150 @@ xgb.plot.importance(importance, main = "Feature Importance Plot")
 mcr <- 1 - sum(diag(confMat$table)) / sum(confMat$table)
 mcr
 
-#################################################################################################################################
+###############################################################################################################################
 
-# Performing Cluster Analysis Using Various Methods
+# Performing Binary Logistic Regression
 
-#################################################################################################################################
+###############################################################################################################################
 
+# Scale data
+predictors <- c("Pregnancies", "Glucose", "BloodPressure", "SkinThickness", "Insulin", "BMI", "DiabetesPedigreeFunction","Age")
+diabetes_data_scaled <- diabetes_data
+diabetes_data_scaled[predictors] <- scale(diabetes_data[predictors])
 
-# Perform cluster analysis using model based clustering I: fit Gaussian parsimonious mixture with G=1:5, k-means initialization
-
-diabetes_data[,-9] <- scale(diabetes_data[,-9]) #Scales all columns of the data except column 9: Outcome, which is categorical 
-true.label <- diabetes_data[,9] # gets the true labels for the diabetes dataset
-
+# Splitting dataset
 set.seed(2024118)
+train = sample (1: nrow(diabetes_data_scaled), nrow(diabetes_data_scaled)*0.75)
+diabetes_data.train= diabetes_data_scaled[train,]
+diabetes_data.test=diabetes_data_scaled[-train,"Outcome"]
+# fit bin. log. reg
+diabetes_logreg <- glm(Outcome ~ Pregnancies + Glucose + BloodPressure + SkinThickness + Insulin + BMI + DiabetesPedigreeFunction + Age, data = diabetes_data.train, family = binomial("logit"))
+summary(diabetes_logreg)
 
-diabetes_data <- as.matrix(diabetes_data) # specify z to be a matrix for GPCM
+# Predict and convert to binary outcomes
+class.pred <- ifelse(predict(diabetes_logreg, newdata = diabetes_data[-train, ], type = "response") > 0.5, 1, 0)
 
-# pairs(diabetes_data,col=true.label) 
-# ggpairs(diabetes_data, columns = 2:4,  aes(color = Outcome, alpha = 0.5))
+# Calculate confusion matrix, MCR, and CR
+conf_matrix <- table(diabetes_data.test, class.pred)
+MCR <- 1 - sum(diag(conf_matrix)) / sum(conf_matrix)
+MCR
+CR <- sum(diag(conf_matrix)) / sum(conf_matrix)
+CR
 
+
+#Remove BloodPressure, SkinThickness, Insulin bcs it has highest p-values
 set.seed(2024118)
+train = sample (1: nrow(diabetes_data), nrow(diabetes_data)*0.75)
+diabetes_data.train= diabetes_data[train,]
+diabetes_data.test=diabetes_data[-train,"Outcome"]
+# fit bin. log. reg
+diabetes_logreg <- glm(Outcome ~ Pregnancies + Glucose + BMI + DiabetesPedigreeFunction + Age, data = diabetes_data.train, family = binomial("logit"))
+summary(diabetes_logreg)
+# Predict and convert to binary outcomes
+class.pred <- ifelse(predict(diabetes_logreg, newdata = diabetes_data[-train, ], type = "response") > 0.5, 1, 0)
 
-### Fitting Gaussian mixture using gpcm(...)
+# Calculate confusion matrix, MCR, and CR
+conf_matrix <- table(diabetes_data.test, class.pred)
+MCR <- 1 - sum(diag(conf_matrix)) / sum(conf_matrix)
+MCR
+CR <- sum(diag(conf_matrix)) / sum(conf_matrix)
+CR
 
-gpcm.out <- gpcm(diabetes_data,G=1:8, start = 2) # now gpcm fits.
-summary(gpcm.out)
-outcome.predict.gpcm <- gpcm.out$map # gets the vector of classifications for each observation
-tab_gpcm <- table(true.label,outcome.predict.gpcm )
-classAgreement(tab_gpcm)$crand
-best <- get_best_model(gpcm.out)
-best
+#Remove Age, bcs it has highest p-values
+set.seed(2024118)
+train = sample (1: nrow(diabetes_data), nrow(diabetes_data)*0.75)
+diabetes_data.train= diabetes_data[train,]
+diabetes_data.test=diabetes_data[-train,"Outcome"]
+# fit bin. log. reg
+diabetes_logreg <- glm(Outcome ~ Pregnancies + Glucose + BMI + DiabetesPedigreeFunction, data = diabetes_data.train, family = binomial("logit"))
+summary(diabetes_logreg)
+# Predict and convert to binary outcomes
+class.pred <- ifelse(predict(diabetes_logreg, newdata = diabetes_data[-train, ], type = "response") > 0.5, 1, 0)
 
-### Fitting  t Parsimonious mixture using tpcm(...) from mixture
+# Calculate confusion matrix, MCR, and CR
+conf_matrix <- table(diabetes_data.test, class.pred)
+MCR <- 1 - sum(diag(conf_matrix)) / sum(conf_matrix)
+MCR
+CR <- sum(diag(conf_matrix)) / sum(conf_matrix)
+CR
 
-tpar = tpcm(diabetes_data, G=1:8,  start=2)
-summary(tpar)
-outcome.predict.tpar <- tpar$map # gets the vector of classifications for each observation
-tab_t<- table(true.label,outcome.predict.tpar)
-classAgreement(tab_t )$crand
-best <- get_best_model(tpar)
-best
+###############################################################################################################################
 
+#EDA Preperation For the Data
 
-### Fitting  mixtures of multivariate-t distributions using teigen(...) to the  data
+###############################################################################################################################
 
-t.out <- teigen(x=diabetes_data,Gs=1:5,init="kmeans") # fits mixtures of multivariate-t distributions to the data
-outcome.predict.t <- t.out$classification # gets the vector of classifications for each observation
-tab_mt<- table(true.label,outcome.predict.t)
-classAgreement(tab_mt )$crand
-best <- summary(t.out)
-best
+library(dplyr)
+library(dendextend)
+library(RColorBrewer)
+library(reshape2)
+library(ggthemes)
+#install.packages("ggthemes") will need to run if you get error message "Error in library(ggthemes) : there is no package called 'ggthemes'"
+library(GGally)
+library(hdrcde)
+#install.packages("hdrcde") will need to run if you get error message "Error in library(ggthemes) : there is no package called 'hdrcde'"
+library(KernSmooth)
+library(ggplot2)
+library(gridExtra)
+library(corrplot)
+library(wordcloud)
+#install.packages("wordcloud") will need to run if you get error message "Error in library(ggthemes) : there is no package called 'wordcloud'"
+library(wordcloud2)
+#install.packages("wordcloud2") will need to run if you get error message "Error in library(ggthemes) : there is no package called 'wordcloud2'"
+library(wesanderson)
+#install.packages("wesanderson") will need to run if you get error message "Error in library(ggthemes) : there is no package called 'wesanderson'"
+library(plotly)
+library(kernlab)
+library(vscc)
+library(caret)
 
-### Fitting  Skew-t Parsimonious mixture using stpcm(...) from mixture
+df <- diabetes_data
 
-stpar = stpcm(diabetes_data, G=1:5,  start=2)
-class.predict.stpar <- stpar$map # gets the vector of classifications for each observation
-tab_st<- table(true.label,class.predict.stpar )
-classAgreement(tab_st )$crand
-best <- get_best_model(stpar)
-best
+# quick look
+head(df)
+# Viewing variable/data types
+str(df)
+# Dimensions of the data
+dim(df)
+# Summary statistics
+summary(df)
+# Finds the count of missing values 
+sum(is.na(df))
+# Finds duplicated rows
+sum(duplicated(df))
+# Pair plot 
+ggpairs(df[,-c(9)], aes(colour=as.factor(Outcome), alpha=0.4),lower=list(continuous="points"),
+        axisLabels="none", switch="both")
 
-### compare performance using ARI ??
-classAgreement(tab_gpcm )$crand
-classAgreement(tab_t )$crand
-classAgreement(tab_mt )$crand
-classAgreement(tab_st )$crand
+# Plot of Outcomes 
+# One variable, Tells us how many people do and do not have diabetes
+outcomes <- df$Outcome
+outcomes <- as.factor(outcomes)
+plot(outcomes, xlab = "Diabetes", ylab = "Number of Individuals", 
+     main = "Diabetes Dataset Outcomes Distribution", col = "lightgreen")
 
+# Age distribution
+ages <- df$Age
+hist(ages, xlab = "Ages", main = "Age Distribution in Diabetes Dataset", col="skyblue")
 
+# Correlations 
+data2<-df[,-c(9)]
+corr1<-cor(data2)
+corrplot(corr1, bg = "white", 
+         type="lower", tl.cex = 0.75, 
+         tl.col="black", tl.srt = 45)
 
+# Normality Test for Factor Analysis. 
+shapiro.test(diabetes_data$Pregnancies) # Not normal, p= 2.2e-16
+shapiro.test(diabetes_data$Glucose) # Not normal
+shapiro.test(diabetes_data$BloodPressure) # Not normal
+shapiro.test(diabetes_data$SkinThickness) # Not normal
+shapiro.test(diabetes_data$Insulin) # Not normal
+shapiro.test(diabetes_data$BMI) # Not normal
+shapiro.test(diabetes_data$Age) # Not normal
 
+# Using the normal QQ-Plot to confirm that the dataset is not normally distributed
+qqnorm(diabetes_data[,1])
+qqline(diabetes_data[,1])
+
+###############################################################################################################################
