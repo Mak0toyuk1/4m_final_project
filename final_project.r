@@ -5,9 +5,7 @@ diabetes_data <-read.csv("C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_proj
 diabetes_data <- read.csv("/Users/xinyichen/Desktop/diabetes_dataset.csv") #Xiyi's dataset
 diabetes_data <- read.csv("C:/Users/10106/Downloads/diabetes_dataset.csv") #Zensen's dataset
 
-library(ggplot2)
 library(dplyr)# Library for the Shapiro-Wilk test
-library(tidyverse)
 
 ###############################################################################################################################
 
@@ -26,33 +24,23 @@ library(caret)
 library(xgboost)
 library(pROC)
 library(ggplot2)
-###############################################################################################################################
-###############################################################################################################################
-
-#Libraries Needed For Unupervised Learning (Clustering) Analysis 
-
-###############################################################################################################################
-library(pgmm)
-library(dendextend)
-library(mixture)
-library(mclust)
-library(MixGHD)
-library(teigen)
-library(ggplot2)
-library(GGally)
-library(cluster)
+library(tidyverse)
 ###############################################################################################################################
 
+#Supervised Learning Analysis Methods
+
+###############################################################################################################################
 set.seed(2024118)
 
 summary(diabetes_data)
+#Scale all columns of data except column 9, outcome
 diabetes_data[,-9] <- scale(diabetes_data[,-9])
 diabetes_data$Outcome<-factor(diabetes_data$Outcome)
 
 set.seed(2024118)
 
+#Split data into 75% train and 25% test
 train.index <- createDataPartition(diabetes_data$Outcome, p=.75, list = FALSE)
-# train.index <- createDataPartition(diabetes_data$Outcome, p=.80, list = FALSE) # Try 80 percent? apparently this is a more common approach.
 y <- diabetes_data[train.index,9]
 x <- diabetes_data[train.index,-9]
 y <- as.factor(y)
@@ -62,6 +50,7 @@ y <- as.factor(y)
 
 set.seed(2024118)
 
+# Tune to get best k-value
 diabetes_cv <- tune.knn(x, y, k = 1:10, tunecontrol = tune.control(sampling = "cross",cross=5))
 summary(diabetes_cv)
 plot(diabetes_cv)
@@ -75,11 +64,14 @@ tab_diabetes.knn
 # Random Forest Classification
 
 set.seed(2024118)
+#Tune to get the best value for mtry and ntree
 diabetes_rf = tune.randomForest(Outcome~., data = diabetes_data[train.index,], mtry = 1:8,ntree=100*1:5,tunecontrol = tune.control(sampling = "cross",cross=5))
 summary(diabetes_rf)
 plot(diabetes_rf)
 
+
 set.seed(2024118)
+#Run the algorithm with the optimal values inputted
 rf_diabetes=randomForest(Outcome~.,data=diabetes_data,subset=train.index,mtry=4,ntree=200,importance=TRUE,type="class")
 rf_diabetes
 rf_diabetes_pred=predict(rf_diabetes,diabetes_data[-train.index,],type="class")
@@ -95,12 +87,15 @@ set.seed(2024118)
 str(diabetes_data)
 summary(diabetes_data)
 
+#Assign the true label of the dataset
 diabetes_data$Outcome <- as.factor(diabetes_data$Outcome)
 
+#Scale the data
 scaled_data <- diabetes_data
 scaled_data[, -ncol(diabetes_data)] <- scale(diabetes_data[, -ncol(diabetes_data)])
 
 set.seed(2024118)  # Correct seed
+#Split data into 75% training and 25% testing
 trainIndex <- createDataPartition(scaled_data$Outcome, p = 0.75, list = FALSE)
 trainData <- scaled_data[trainIndex, ]
 testData <- scaled_data[-trainIndex, ]
@@ -135,7 +130,7 @@ set.seed(2024118)
 confMat <- confusionMatrix(as.factor(testPredBinary), as.factor(testLabel))
 print(confMat)
 
-# Compute Misclassification Rate (MCR)
+# Compute Misclassification Rate (MCR) and Accuracy 
 mcr <- 1 - sum(diag(confMat$table)) / sum(confMat$table)
 mcr
 1-mcr
@@ -154,7 +149,6 @@ xgb.plot.importance(importance, main = "Feature Importance Plot")
 
 #Comparing All Methods Using MCR and Accuracy
 
-
 # k-Nearest Neighbours (kNN)
 1-classAgreement(tab_diabetes.knn)$diag 
 
@@ -165,16 +159,17 @@ xgb.plot.importance(importance, main = "Feature Importance Plot")
 mcr <- 1 - sum(diag(confMat$table)) / sum(confMat$table)
 mcr
 
+#Accuracy values for all methods
 classAgreement(tab_diabetes.knn)$diag 
 classAgreement(tab_diabetes.rf)$diag
 sum(diag(confMat$table)) / sum(confMat$table)
 
 
-###############################################################################################################################
+######################################################################################################################################
 
-# Performing Binary Logistic Regression
+# Performing Binary Logistic Regression (Need to run rm(list=ls()) and import the data and run libraries again before doing this part)
 
-###############################################################################################################################
+######################################################################################################################################
 
 # Scale data
 predictors <- c("Pregnancies", "Glucose", "BloodPressure", "SkinThickness", "Insulin", "BMI", "DiabetesPedigreeFunction","Age")
