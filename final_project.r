@@ -90,6 +90,8 @@ varImpPlot(rf_diabetes)
 
 # Boosting
 
+set.seed(2024118)
+
 str(diabetes_data)
 summary(diabetes_data)
 
@@ -103,12 +105,14 @@ trainIndex <- createDataPartition(scaled_data$Outcome, p = 0.75, list = FALSE)
 trainData <- scaled_data[trainIndex, ]
 testData <- scaled_data[-trainIndex, ]
 
+set.seed(2024118)
 # Prepare data for XGBoost
 trainMatrix <- model.matrix(Outcome ~ . - 1, data = trainData)
 testMatrix <- model.matrix(Outcome ~ . - 1, data = testData)
 trainLabel <- as.numeric(as.character(trainData$Outcome))
 testLabel <- as.numeric(as.character(testData$Outcome))
 
+set.seed(2024118)
 # Train the XGBoost model
 xgbModel <- xgboost(
   data = trainMatrix,
@@ -121,10 +125,12 @@ xgbModel <- xgboost(
   verbose = 0
 )
 
+set.seed(2024118)
 # Make predictions on the test set
 testPred <- predict(xgbModel, testMatrix)
 testPredBinary <- ifelse(testPred > 0.5, 1, 0)
 
+set.seed(2024118)
 # Evaluate model performance
 confMat <- confusionMatrix(as.factor(testPredBinary), as.factor(testLabel))
 print(confMat)
@@ -132,7 +138,7 @@ print(confMat)
 # Compute Misclassification Rate (MCR)
 mcr <- 1 - sum(diag(confMat$table)) / sum(confMat$table)
 mcr
-
+1-mcr
 # Calculate AUC
 rocCurve <- roc(testLabel, testPred)
 aucValue <- auc(rocCurve)
@@ -146,16 +152,11 @@ importance <- xgb.importance(model = xgbModel, feature_names = colnames(trainMat
 print(importance)
 xgb.plot.importance(importance, main = "Feature Importance Plot")
 
-#Comparing All Methods Using MCR
+#Comparing All Methods Using MCR and Accuracy
 
-# Classification Tree
-1-classAgreement(diabetes_tab_tree)$diag
 
 # k-Nearest Neighbours (kNN)
 1-classAgreement(tab_diabetes.knn)$diag 
-
-# Bagging 
-1-classAgreement(diabetes_tab_bag)$diag
 
 # Random Rorest
 1-classAgreement(tab_diabetes.rf)$diag 
@@ -163,6 +164,11 @@ xgb.plot.importance(importance, main = "Feature Importance Plot")
 # Boosting (Add Boosting MCR Here)
 mcr <- 1 - sum(diag(confMat$table)) / sum(confMat$table)
 mcr
+
+classAgreement(tab_diabetes.knn)$diag 
+classAgreement(tab_diabetes.rf)$diag
+sum(diag(confMat$table)) / sum(confMat$table)
+
 
 ###############################################################################################################################
 

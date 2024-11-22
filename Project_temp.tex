@@ -44,8 +44,6 @@
 \setlength{\parskip}{0.5em} % Adjust spacing to 0.5em (smaller than default)
 
 
-
-
 \begin{document}
 
 \title{STATS 4M03: Multivariate Analysis\\ Final Project \\ Diabetes Dataset }
@@ -71,18 +69,20 @@
 \section{Introduction}
 \subsection{Abstract}
 
+
+
 \begin{indent} 
-
+\onehalfspacing	
+	
 The study of diabetes is vital in understanding the progression of the disease and identifying key predictors. Throughout this paper, we perform data analysis on the diabetes dataset, primarily focusing on leveraging various statistical methods that we learned in STATS 4M03$\backslash$6M03: Multivariate Analysis. By using a variety of methods, our goal is to predict the onset of diabetes from detailed medical diagnostic measurements based on several contributing health factors --- with the aim of uncovering patterns and relationships between various clinical and lifestyle factors. Through this analysis, we hope to emphasize actionable insights for clinical decision-making and provide preventive strategies. 
-
 \end{indent}
 
 \subsection{The Data}
 
 \begin{indent}
-
-In this paper, we will study the \href{https://www.kaggle.com/datasets/hasibur013/diabetes-dataset}{Diabetes Dataset}. \cite{Kaggles}, which contains 768 rows x 9 columns. Each column represents various health diagnostic metrics for predicting diabetes and each row corresponds to a unique patient record, with features capturing key medical attributes. Table~\ref{tab:DibetesTab} showcases each of the columns in the dataset and a description of each of the columns. We will be using R \cite{Rlang} as our main computing software
-
+\onehalfspacing	
+	
+We will study the \href{https://www.kaggle.com/datasets/hasibur013/diabetes-dataset}{Diabetes Dataset} from \cite{Kaggles}, which contains 768 rows x 9 columns. Each column represents various health diagnostic metrics for predicting diabetes and each row corresponds to a unique patient record. Table~\ref{tab:DibetesTab} showcases a description for each of the columns in the dataset, and we will be using R as our main computing software \citep{Rlang}.
 \end{indent}
 
 
@@ -100,7 +100,8 @@ In this paper, we will study the \href{https://www.kaggle.com/datasets/hasibur01
 		BMI  & Float: Body mass index, defined as weight in kg/(height in m)\^2. \\ \hline
 		DiabetesPedigreeFunction & Float: A score indicating genetic predisposition to diabetes based on family history. \\ \hline
 		Age & Integer: Age of the patient (in years). \\ \hline
-		Outcome & Binary: Target variable where 1 indicates diabetes, and 0 indicates no diabetes. \\ \hline
+		Outcome & Binary: Target variable where 1 indicates diabetes, and 0 indicates no diabetes. \\ 
+		\hline
 	\end{tabular}
 }
 	\caption{Description of the Diabetes Dataset}
@@ -110,98 +111,105 @@ In this paper, we will study the \href{https://www.kaggle.com/datasets/hasibur01
 
 \subsubsection{Exploratory Data Analysis (EDA)}
 
-Figure~\ref{fig:outcomeplot} illustrates that there are a lot more individuals without diabetes than with diabetes. Figure~\ref{fig:ageplot} showcases that the ages listed in this dataset follow a right-skewed distribution, where majority of the individuals are aged 20-30.
+\begin{indent}
+\onehalfspacing	
+	
+Figure~\ref{fig:outcomeplot} illustrates that there are a lot more individuals in the dataset who do not have diabetes. Figure~\ref{fig:ageplot} showcases that the ages listed in this dataset follow a right-skewed distribution, where majority of the individuals are aged 20-30.
 
 Figure~\ref{fig:corplot} illustrates the relatively high correlation between "SkinThickness," "BMI," and "Insulin." We also note that "Glucose" is reasonably correlated with "Insulin," "BMI," and "Age." Furthermore, "Age" is highly correlated with "Pregnancies."
 
-The true label of this dataset is "Outcome," whereas the other variables are considered the predictors. Since our dataset is not that large, we determined that we should use all of the predictors as they all show reasonably high correlation with each other. 75\% of the data will be used for training, whereas the rest will be used for testing.
+The true label of this dataset is "Outcome," whereas the other variables are considered the predictors. Since our dataset is not that large, we determined that we should use all of the predictors as they all show reasonably high correlation with each other. 
 
-We cannot apply factor analysis on our dataset as it is not normally distributed. This can be confirmed by the Shapiro-Wilk test \cite{Rlang} and normal QQ plot \cite{Rlang}. For dimensionality reduction, we would use principal component analysis. We will use 3 principal components.
+We cannot apply factor analysis on our dataset as it is not normally distributed. This can be confirmed by the Shapiro-Wilk test and normal QQ plot \citep{Rlang}.
+\end{indent}
 
-% \begin{figure}[h!]
-% 	\centering
-% 	% First figure
-% 	\begin{minipage}{0.48\textwidth}
-% 		\fbox{{\includegraphics[width=\textwidth]{ages.png}}}
-% 		\caption{Age Distribution of the Dataset} 
-% 		\label{fig:ageplot}
-% 	\end{minipage}
-% 	\hfill % Horizontal space between figures
-% 	% Second figure
-% 	\centering
-% 	\begin{minipage}{0.48\textwidth}
-% 		\centering
-% 		\fbox{\includegraphics[width=\textwidth]{outcomes.png}} 
-% 		\caption{Distribution of Outcomes} 
-% 		\label{fig:outcomeplot}
-% 	\end{minipage}
-% \end{figure}
+ \begin{figure}[h!]
+ 	\centering
+ 	% First figure
+ 	\begin{minipage}{0.48\textwidth}
+ 		\fbox{{\includegraphics[width=\textwidth]{ages.png}}}
+ 		\caption{Age Distribution of the Dataset} 
+ 		\label{fig:ageplot}
+ 	\end{minipage}
+ 	\hfill % Horizontal space between figures
+ 	% Second figure
+ 	\centering
+ 	\begin{minipage}{0.48\textwidth}
+ 		\centering
+ 		\fbox{\includegraphics[width=\textwidth]{outcomes.png}} 
+ 		\caption{Distribution of Outcomes} 
+ 		\label{fig:outcomeplot}
+ 	\end{minipage}
+ \end{figure}
 
-% \begin{figure}[h!]
-% 	\centering
-% 	% First figure
-% 	\begin{minipage}{0.48\textwidth}
-% 		\fbox{{\includegraphics[width=\textwidth]{correlations2.png}}}
-% 		\caption{Correlation of Variables} 
-% 		\label{fig:corplot}
-% 	\end{minipage}
-% 	\hfill % Horizontal space between figures
-% 	% Second figure
-% 	\centering
-% 	\begin{minipage}{0.48\textwidth}
-% 		\centering
-% 		\fbox{\includegraphics[width=\textwidth]{normal.png}} 
-% 		\caption{Normal QQ-Plot} 
-% 		\label{fig:qqplot}
-% 	\end{minipage}
-% \end{figure}
+ \begin{figure}[h!]
+ 	\centering
+ 	% First figure
+ 	\begin{minipage}{0.48\textwidth}
+ 		\fbox{{\includegraphics[width=\textwidth]{correlations2.png}}}
+ 		\caption{Correlation of Variables} 
+ 		\label{fig:corplot}
+ 	\end{minipage}
+ 	\hfill % Horizontal space between figures
+ 	% Second figure
+ 	\centering
+ 	\begin{minipage}{0.48\textwidth}
+ 		\centering
+ 		\fbox{\includegraphics[width=\textwidth]{normal.png}} 
+ 		\caption{Normal QQ-Plot} 
+ 		\label{fig:qqplot}
+ 	\end{minipage}
+ \end{figure}
 		
 \subsubsection{Data Preparation} 
 
-We write about the training and testing here, and how we used column 9 as a label. We also scaled the dataset.\\
+\begin{indent}
+\onehalfspacing
+	
+We prepared the data by scaling all the columns in the dataset except for column nine which is the response variable, "Outcome." We will split the data as follows: 75\% for training, whereas the rest will be used for testing.
+\end{indent}
 
 \section{Methodology}
-\subsection{Supervised learning Analysis} 
- In this section, we perform supervised learning analysis using Classification trees: k-Nearest Neighbours and the following ensembles method: Random Forests Classifiers.\cite{zhou2012ensemble}
  
- \subsubsection{k-Nearest Neighbours}
+\subsection{k-Nearest Neighbours}
 
- Firstly, we executed the k-Nearest Neighbours algorithm \cite{peterson2009k} on our dataset. The algorithm is a non-parametric, supervised learning classifier that uses proximity to make classifications about the grouping of a dataset.
+\indent
+\onehalfspacing
 
- \subsubsection{Random Forest Classifiers}
+We executed the k-Nearest Neighbours algorithm, a non-parametric, supervised learning classifier that uses proximity to make classifications about the grouping of a dataset. \citep{peterson2009k}. Specifically, the algorithm takes an unlabelled observation and assigns it to the class that has the most labelled observations within its neighbourhood. \citep{Lecture14}. Additionally, we note that the optimal k-value will result in the best classification rate, based on the labelled points that are being treated as unlabelled by the algorithm \citep{Lecture14}.
+
+ \subsection{Random Forest Classifiers}
  
- Also, we used the Random Forest Classifiers \cite{zhou2012ensemble} on our dataset. Random Forest classifiers is a bootstrapping sampling method that combines the results of multiple decision trees to draw on a conclusion. The algorithm \cite{Lecture16} is an extension of the bagging algorithm \cite{Lecture16} that creates uncorrelated decision trees, for each tree, a random sample of $\mathcal{M}$ is taken at each decision tree split.
+\indent
+\onehalfspacing
+
+We also utilized the Random Forest Classifiers algorithm on our dataset \citep{zhou2012ensemble}. Random Forest classifiers is a bootstrapping sampling method that combines the results of multiple decision trees to draw on a conclusion. The algorithm is an extension of the bagging algorithm which creates uncorrelated decision trees. For each tree, a random sample of $\mathcal{M}$ is taken at each decision tree split, $M$ \citep{Lecture16}.
 
 \subsection{Binary Logistic Regression}
 
 \begin{indent}
+\onehalfspacing
 	
-
-We performed binary logistic regression \cite{faraway2016extending} on our dataset to explore the relationship and significance between our predictor variables and the binary response variable “Outcome." The initial model uses all eight predictor variables.The objective of using binary logistic regression was to identify the most significant predictors using backward elimination, a step-wise technique employed in regression. This means that predictors whose $p$-value is greater than $\alpha = 0.05$ level of significance will be removed and we will run the algorithm again, repeating this process until we end up with only statistically significant predictors in our model --- minimizing the risk of over-fitting. 
-
+We performed binary logistic regression on our dataset to explore the relationship and significance between our predictor variables and the binary response variable, “Outcome" \citep{faraway2016extending}. We identify the most significant predictors using backward elimination, a step-wise technique employed in regression to minimize the risk of overfitting. This means that predictors whose $p$-value is greater than $\alpha = 0.05$ level of significance will be removed and we will run the algorithm again, repeating this process until we end up with only statistically significant predictors in our model.
 \end{indent}
 
 \subsection{Boosting}
 
-Boosting \cite{chen2015xgboost} \cite{friedman2001greedy} is one of the ensembles methods which combines multiple weak learners, typically decision trees, to create a strong predictive model. For this analysis, we used XGBoost (Extreme Gradient Boosting), which is efficient and optimized for large datasets, to predict the presence of diabetes based on our predictor variables.
+\begin{indent}
+\onehalfspacing
+	
+Boosting is one of the ensembles methods which combines multiple weak learners, typically decision trees, to create a strong predictive model \citep{chen2015xgboost,friedman2001greedy}. For this analysis, we used XGBoost (Extreme Gradient Boosting), which is efficient and well optimized for large datasets, to predict the presence of diabetes based on our predictor variables. Missing or zero values were present in some predictors (e.g., insulin), which could influence the model's performance.
+\end{indent}
 
-The model was trained on 75\% of the data, leaving 25\% for testing. The binary outcome variable (1 = diabetes, 0 = no diabetes) was predicted using features such as glucose levels, BMI, and age. Missing or zero values were present in some predictors (e.g., insulin), which could influence the model's performance.
-
-\textbf{Model Parameters}
-\begin{itemize}
-	\item Learning rate (\texttt{eta}): 0.1
-	\item Maximum tree depth (\texttt{max\_depth}): 6
-	\item Evaluation metric: Area Under the Curve (AUC)
-	\item Number of boosting rounds (\texttt{nrounds}): 100
-\end{itemize}
+\textbf{Model Parameters}; Learning rate (\texttt{eta}): 0.1, Maximum tree depth (\texttt{max\_depth}): 6, Evaluation metric: Area Under the ROC Curve (AUC), and Number of boosting rounds (\texttt{nrounds}): 100
 
 \section{Discussion}
 \subsection{Binary Logistic Regression}
 
 \begin{table}[h!]
 	\centering
-	\resizebox{=0.9\textwidth}{!}{ % Resize to fit the width of the page
-		\begin{tabular}{|c|c|c|c|c|}
+	\resizebox{=\textwidth}{!}{
+		\begin{tabular}{|l|l|l|l|l|}
 			\hline
 			\textbf{Coefficients} & \textbf{Estimate} & \textbf{Std. Error} & \textbf{Z-Value} & \textbf{Pr(>|Z|)} \\ \hline
 			(Intercept) & -0.863576 & 0.111504 & -7.745 & 9.57E-15 \\ \hline
@@ -219,109 +227,103 @@ The model was trained on 75\% of the data, leaving 25\% for testing. The binary 
 	\label{tab:BinLogReg}
 \end{table}
 
+\indent 
+\onehalfspacing
+
 From (Table~\ref{tab:BinLogReg}), we see that the coefficients for “BloodPressure,” “SkinThickness,” “Insulin,” and "Age" have high p-values, indicating that at $\alpha = 0.05$ level of significance, they are not significant in predicting the "Outcome". At this step, the full binary logistic regression model outputs a Misclassification Rate (MCR) of  0.3697917.
 
 \begin{table}[h!]
 	\centering
-	\resizebox{=0.90\textwidth}{!}{%
-	\begin{tabular}{|c|c|c|c|c|}
-		\hline
-			\textbf{Coefficients:} & \textbf{Estimate} & \textbf{Std. Error} & \textbf{Z-Value} & \textbf{Pr(>|Z|)} \\ 
-		\hline
-		(Intercept)   & -7.90218 & 0.71505 & -11.051 & <2e-16 \\ 
-		\hline
-		Pregnancies   & 0.14734  & 0.03174 & 4.642   & 3.45E-06 \\ 
-		\hline
-		Glucose       & 0.03135  & 0.00375 & 8.359   & <2e-16 \\ 
-		\hline
-		BMI           & 0.08415  & 0.01597 & 5.269   & 1.37E-07 \\ 
-		\hline
-		DiabetesPedigreeFunction & 0.863621 & 0.336274 & 2.568 & 0.0102 \\ \hline
-		Age & 0.029419 & 0.010701  & 2.749 & 0.00598 \\ \hline
-	\end{tabular}%
+	\resizebox{=\textwidth}{!}{
+		\begin{tabular}{|l|l|l|l|l||l|}
+			\hline
+			Coefficients: & Estimate & Std. Error & z value & Pr(>|z|) & Odds Ratio \\ \hline
+			(Intercept)   & -8.118918 & 0.730397 & -11.116 & <2e-16 & --- \\ \hline
+			Pregnancies   & 0.154186  & 0.032151 & 4.796   & 1.62E-06 & 1.167 \\ \hline
+			Glucose       & 0.030679  & 0.003781 & 8.113   & 4.92e-16 & 1.031 \\ \hline
+			BMI           & 0.080086  & 0.016048 & 4.990   & 6.03e-07 & 1.083 \\ \hline
+			DiabetesPedigreeFunction & 0.863621 & 0.336274 & 2.568 & 0.0102 & 2.372 \\
+			\hline
+		\end{tabular}
 	}
-	\caption{Binary Logistic Regression Reduced Model Output}
+	\caption{Binary Logistic Regression Reduced Model Output with Odds Ratio}
 	\label{tab:BinLogRegA}
 \end{table}
 
-Table~\ref{tab:BinLogRegA} contains the output from the Reduced Binary Logistic Regression Model. We observe that at $\alpha=0.05$ level of significance, every coefficient in the model is statistically significant in predicting diabetes Outcome. This is further reinforced given that the reduced model outputs an MCR of 0.2395833, i.e. $~76\%$ of individuals who were predicting to have, or not develop diabetes were correctly classified, indicating enhanced model performance. Consequently, we conclude that "Pregnancies," "Glucose," "BMI," and "DiabetesPedigreeFunction" all have a significant influence on the “Outcome”. This suggests a strong association between these factors and the risk of diabetes in females. \\
+Table~\ref{tab:BinLogRegA} showcases the output from the reduced Binary Logistic Regression Model. We observe that the $p$-values for all the predictors in the model are less than $\alpha = 0.05$, indicating that they're statistically significant in predicting the response variable, "Outcome." Furthermore, the MCR has decreased to $0.2395833$, i.e. $\sim76\%$ of the the individuals predicted to have or not have diabetes were correctly classified. showcasing an improvement in the performance of the model. 
 
+Furthermore, Table~\ref{tab:BinLogRegA} showcases the Odds Ratios (OR) for the predictors in the model. Note that each OR is greater than 1, suggesting increased likelihoods of the presence of diabetes with respect to the predictors. Specifically, the OR for ‘Pregnancies’ is 1.167, indicating that females with a history of pregnancies are 1.167 times more likely to have diabetes than those without. Most significantly, the OR for ‘DiabetesPedigreeFunction’ is 2.372, meaning that females who indicate a genetic predisposition to diabetes based on family history are 2.372 times more likely to develop diabetes than those without a genetic predisposition. The OR for the other predictors can be interpreted similarly. 
 
 \subsection{Boosting}
 
-The model achieved an accuracy of 80.5\% on the test set, with an AUC of 0.87. The AUC, derived from the ROC curve (Figure~\ref{fig:roc}), indicates that the model performs well in distinguishing between diabetic and non-diabetic individuals.
+\indent
+\onehalfspacing
 
-% \begin{figure}[h!]
-% 	\centering
-% 	\fbox{\includegraphics[width=0.7\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G1.png"}}
-% 	\caption{ROC Curve for Boosting Model}
-% 	\label{fig:roc}
-% \end{figure}
+Boosting achieved an accuracy of 73.44\%, with an AUC of 0.802. The AUC is the area under the ROC curve (Figure~\ref{fig:roc}). The ROC Curve is a plot of the model’s Sensitivity (True Positive Rate) against the Specificity (True Negative Rate, showcasing how well the model distinguishes between classes across all possible thresholds \citep{fawcett2006introduction}. The AUC is the area under the ROC curve, summarizing the model's overall ability to discriminate between positive and negative classes. An AUC of 0.5 represents random guessing, while an AUC closer to 1.0 indicates excellent performance \citep{pROC,fawcett2006introduction}.
 
-The feature importance plot (Figure~\ref{fig:importance}) reveals that glucose is the most significant predictor, followed by age, BMI, and genetic predisposition (DiabetesPedigreeFunction). These results align with established medical understanding of diabetes risk factors.
+\begin{figure}[h!]
+	\centering
+	\fbox{\includegraphics[width=0.73\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G2.png"}}
+	\caption{ROC Curve for Boosting Model}
+	\label{fig:roc}
+\end{figure}
 
-% \begin{figure}[h!]
-% 	\centering
-% 	% First figure
-% 	\begin{minipage}{0.47\textwidth}
-% 		\fbox{\includegraphics[width=\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G1.png"}}
-% 		\caption{ROC Curve for Boosting Model}
-% 		\label{fig:roc}
-% 	\end{minipage}
-% 	\hfill % Horizontal space between figures
-% 	% Second figure
-% 	\begin{minipage}{0.47\textwidth}
-% 		\centering
-% 		\fbox{\includegraphics[width=\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G2.png"}}
-% 		\caption{Feature Importance Plot}
-% 		\label{fig:importance}
-% 	\end{minipage}
-% \end{figure}
+\begin{figure}[h!]
+	\centering
+ 	\fbox{\includegraphics[width=0.73\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G1.png"}}
+ 	\caption{Feature Importance Plot}
+ 	\label{fig:importance}
+\end{figure}
 
-% \begin{figure}[h!]
-% 	\centering
-% 	\fbox{\includegraphics[width=0.7\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G2.png"}}
-% 	\caption{Feature Importance Plot}
-% 	\label{fig:importance}
-% \end{figure}
-
-
-Boosting effectively identified significant predictors of diabetes, particularly glucose and BMI. However, the model's performance may be affected by missing data and the dataset's limited size. Future work could address these limitations by imputing missing values and validating the model on larger datasets. Overall, XGBoost proved to be a robust method for this binary classification problem.
+Boosting proved to be an effective method for diabetes classification through achieving an AUC of 0.802 and identifying Glucose, BMI, and Age as the most critical predictors in Figure~\ref{fig:importance}. However, the moderate specificity given by the model (58.21\%) suggests potential overemphasis on predicting positive cases, leading to false positives. Future work could improve model balance through hyperparameter tuning or additional data preprocessing techniques.
 
 \subsection{k-Nearest Neighbours}
 
-% might want to include plot
-After running tune.knn() with $5$-fold cross validation to get the parameters for the k-nearest neighbours algorithm (k-NN), we found that the best value for $k$ is $3$. After inputting $k=3$ and running the k-NN algorithm, we found that the MCR given by k-NN classification is $0.2916667$, i.e. $~71\%$ of the individuals with or without diabetes were correctly classified.
+\indent
+\onehalfspacing
 
-% \begin{figure}[h!]
-% 	\centering
-% 	\fbox{\includegraphics[width=0.7\textwidth]{knnplot.png}} 
-% 	\caption{Output Plot From k-NN Classification} 
-% 	\label{fig:KNNPlot}
-% \end{figure}
+After running tune.knn() with $5$-fold cross validation to get the parameters for the k-nearest neighbours algorithm (k-NN), we found that the best value for $k$ is $3$. which can be observed in Figure~\ref{fig:KNNPlot}. After inputting $k=3$ and running the k-NN algorithm, we found that the MCR given by k-NN classification is $0.2916667$, i.e. $~71\%$ of the individuals with or without diabetes were correctly classified.
+
+ \begin{figure}[h!]
+ 	\centering
+ 	\fbox{\includegraphics[width=0.73\textwidth]{knnplot.png}} 
+ 	\caption{Output Plot From k-NN Classification} 
+ 	\label{fig:KNNPlot}
+ \end{figure}
 
 \subsection{Random Forest Classifiers}
 
-%we wanna include the Variable importance plot here
+\begin{indent}
+\onehalfspacing
+
 After running tune.RandomForest() with $5$-fold cross validation to get the best parameters for the random forest algorithm, we found that the best value for $\mathcal{M}$ is $4$ and the best value of $M$ is $200$. 
 
-After tuning and inputting $\mathcal{M}$ = $4$ and $M$ = $200$ into the random forest algorithm, we found that the MCR given by random forest classification is $0.28125$, i.e. $~72\%$ of the the individuals with or without diabetes were correctly classified.
-Finally, we also observe that Glucose and BMI are the two most important variables according to the variable importance plot.
+After tuning and inputting $\mathcal{M}$ = $4$ and $M$ = $200$ into the random forest algorithm, we found that the MCR given by random forest classification is $0.28125$, i.e. $\sim72\%$ of the the individuals predicted to have or not have diabetes were correctly classified.
+Finally, we see that Glucose and BMI are the most important variables, and excluding them from the model will lead to worse accuracy in predicting the Outcome. Conversely, SkinThickness and BloodPressure are the least important variables and excluding them from the model will not greatly affect the accuracy of the model.
+\end{indent}
 
-% \begin{figure}[h!]
-% 	\centering
-% 	% First figure
-% 	\fbox{{\includegraphics[width=0.7\textwidth]{MeanDecreaseAccuracyPlotForRandomForest.png}}}
-% 	\caption{MeanDecreaseAccuracy Plot from Random Forest} 
-% 	\label{fig:RFPlot}
-% \end{figure}
+\begin{figure}[h!]
+	\centering
+ 	% First figure
+ 	\fbox{{\includegraphics[width=0.73\textwidth]{MeanDecreaseAccuracyPlotForRandomForest.png}}}
+ 	\caption{MeanDecreaseAccuracy Plot from Random Forest} 
+	\label{fig:RFPlot}
+\end{figure}
 
 
 \section{Conclusion}
+\indent
+\onehalfspacing
 
-\textbf{TEMPORARY, WILL IMPROVE LATER} Comparison between supervised and unsupervised learning analysis, which method performs better for this dataset, which version of machine learning analysis helps us draw better conclusions for our dataset etc. 
+Throughout this work, we presented various statistical Supervised Learning Analysis methods that could be used to study the \href{https://www.kaggle.com/datasets/hasibur013/diabetes-dataset}{Diabetes Dataset} from \cite{Kaggles}. We effectively showed the accuracy in performance of methods such as k-Nearest Neighbours classification, Binary Logistic Regression, and the ensembles methods: Random Forest and Boosting. Each of the models displayed an accuracy of $70.833\%, 76.042\%, 71.88\%$, and $73.44\%$ respectively, indicating that Binary Logistic Regression was the best Supervised Learning Analysis method in predicting the onset of diabetes. 
+
+Furthermore, the conclusions determined by each of the various methods align with general scientific consensus on predictors for diabetes such as Glucose levels, BMI, Age, and whether an individuals family history has shown to have a predisposition to diabetes. 
+
+Ultimately, although Supervised Learning Analysis was effective in predicting the onset of diabetes based on several relevant predictors, we remain conscious of challenges such as the large sample size required for logistic regression to output stable results, choosing ‘k’ in k-NN, through computationally expensive techniques like cross validation, and the high memory usage and computational cost associated with random forest \citep{7724478}.
+
 
  \section{Bibliography}
+ \singlespacing
  \bibliographystyle{apa} 
  \bibliography{references}
 
