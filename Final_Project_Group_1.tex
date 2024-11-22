@@ -74,7 +74,7 @@
 \begin{indent} 
 \onehalfspacing	
 	
-The study of diabetes is vital in understanding the progression of the disease and identifying key predictors. Throughout this paper, we perform data analysis on the diabetes dataset, primarily focusing on leveraging various supervised learning analysis methods that we learned in STATS 4M03$\backslash$6M03: Multivariate Analysis. By using a variety of methods, our goal is to predict the onset of diabetes from detailed medical diagnostic measurements based on several contributing health factors --- with the aim of uncovering patterns and relationships between various clinical and lifestyle factors. Through this analysis, we hope to emphasize actionable insights for clinical decision-making and provide preventive strategies. 
+The study of diabetes is vital in understanding the progression of the disease and identifying key predictors. Throughout this paper, we perform data analysis on the \href{https://www.kaggle.com/datasets/hasibur013/diabetes-dataset}{diabetes dataset}, primarily focusing on leveraging various supervised learning analysis methods that we learned in STATS 4M03$\backslash$6M03: Multivariate Analysis. By using a variety of methods, our goal is to predict the onset of diabetes from detailed medical diagnostic measurements based on several contributing health factors --- to uncover patterns and relationships between various clinical and lifestyle factors. Through this analysis, we hope to emphasize actionable insights for clinical decision-making and provide preventive strategies. 
 \end{indent}
 
 \subsection{The Data}
@@ -82,7 +82,7 @@ The study of diabetes is vital in understanding the progression of the disease a
 \begin{indent}
 \onehalfspacing	
 	
-We will study the \href{https://www.kaggle.com/datasets/hasibur013/diabetes-dataset}{Diabetes Dataset} from \cite{Kaggles}, which contains 768 rows x 9 columns. Each column represents various health diagnostic metrics for predicting diabetes and each row corresponds to a unique patient record. Table~\ref{tab:DibetesTab} showcases a description for each of the columns in the dataset, and we will be using R as our main computing software \citep{Rlang}.
+We will study the \href{https://www.kaggle.com/datasets/hasibur013/diabetes-dataset}{diabetes dataset} from \cite{Kaggles}, which contains 768 rows x 9 columns. Each column represents various health diagnostic metrics for predicting diabetes and each row corresponds to a unique patient record. Table~\ref{tab:DibetesTab} showcases a description for each of the columns in the dataset, and we will be using R as our main computing software \citep{Rlang}.
 \end{indent}
 
 
@@ -120,7 +120,7 @@ Figure~\ref{fig:outcomeplot} illustrates that there are a lot more individuals i
 
 Figure~\ref{fig:corplot} illustrates the relatively high correlation between SkinThickness, BMI, and Insulin. We also note that Glucose is reasonably correlated with Insulin, BMI, and Age. Furthermore, Age is highly correlated with Pregnancies.
 
-We cannot apply factor analysis on our dataset as it is not normally distributed. This can be confirmed by the Shapiro-Wilk test and normal QQ plot \citep{Rlang}.
+We cannot apply factor analysis on our dataset as it is not normally distributed. This can be confirmed by the Shapiro-Wilk test and normal QQ plot in Figure~\ref{fig:qqplot} \citep{Rlang}.
 \end{indent}
 
  \begin{figure}[h!]
@@ -178,14 +178,14 @@ We prepared the data by scaling all the columns in the dataset except for column
 \indent
 \onehalfspacing
 
-We executed the k-Nearest Neighbours algorithm, a non-parametric, supervised learning classifier that uses proximity to make classifications about the grouping of a dataset. \citep{peterson2009k,7724478}. Specifically, the algorithm takes an unlabelled observation and assigns it to the class that has the most labelled observations within its neighbourhood. \citep{Lecture14}. Additionally, we note that the optimal k-value will result in the best classification rate, based on the labelled points that are being treated as unlabelled by the algorithm \citep{Lecture14}.
+We executed the k-Nearest Neighbours algorithm (k-NN), a non-parametric, supervised learning classifier that uses proximity to make classifications about the grouping of a dataset. \citep{peterson2009k,7724478}. Specifically, the algorithm takes an unlabelled observation and assigns it to the class that has the most labelled observations within its neighbourhood. \citep{Lecture14}. Additionally, we note that the optimal k-value will result in the best classification rate, based on the labelled points that are being treated as unlabelled by the algorithm \citep{Lecture14}.
 
  \subsection{Random Forest Classifiers}
  
 \indent
 \onehalfspacing
 
-We also utilized the Random Forest Classifiers algorithm on our dataset \citep{zhou2012ensemble}. Random Forest is a bootstrapping sampling method that combines the results of multiple decision trees to draw on a conclusion \citep{7724478}. The algorithm is an extension of the bagging algorithm which creates uncorrelated decision trees. For each tree, a random sample of $\mathcal{M}$ is taken at each decision tree split, $M$, with the goal of improved predictive model accuracy \citep{Lecture16}.
+We also utilized the Random Forest Classifiers algorithm on our dataset \citep{zhou2012ensemble}. Random Forest is a bootstrapping sampling method that combines the results of multiple decision trees to draw on a conclusion \citep{7724478}. The algorithm is an extension of the bagging algorithm which creates uncorrelated decision trees. For each tree, a random sample of $\mathcal{M}$ predictors is taken at each decision tree split for each of the $M$ trees, with the goal of improved predictive model accuracy \citep{Lecture16}.
 
 \subsection{Binary Logistic Regression}
 
@@ -200,7 +200,7 @@ We performed binary logistic regression on our dataset to explore the relationsh
 \begin{indent}
 \onehalfspacing
 	
-Boosting is one of the ensemble methods which combines multiple weak learners, typically decision trees, to create a strong predictive model \citep{chen2015xgboost,friedman2001greedy}. For this analysis, we used XGBoost (Extreme Gradient Boosting), which is efficient and well optimized for large datasets, to predict the presence of diabetes based on our predictor variables. Missing or zero values were present in some predictors (e.g., insulin), which could influence the model's performance.
+Boosting is one of the ensemble methods which combines multiple weak learners, typically decision trees, to create a strong predictive model \citep{chen2015xgboost,friedman2001greedy}. For this analysis, we used XGBoost (Extreme Gradient Boosting), which is efficient and well optimized for large datasets, to predict the presence of diabetes based on our predictor variables. 
 \end{indent}
 
 \textbf{Model Parameters}; Learning rate (\texttt{eta}): 0.1, Maximum tree depth (\texttt{max\_depth}): 6, Evaluation metric: Area Under the ROC Curve (AUC), and Number of boosting rounds (\texttt{nrounds}): 100
@@ -212,11 +212,11 @@ Boosting is one of the ensemble methods which combines multiple weak learners, t
 \indent
 \onehalfspacing
 
-After running tune.knn() with $5$-fold cross validation to get the parameters for the k-nearest neighbours algorithm (k-NN), we found that the best value for $k$ is $3$, which can be observed in Figure~\ref{fig:KNNPlot}. After inputting $k=3$ and running the k-NN algorithm, we found that the MCR given by k-NN classification is $0.2916667$, i.e. $~71\%$ of the individuals with or without diabetes were correctly classified.
+After tuning the algorithm using a $5$-fold cross-validation to get the optimal parameters for the k-nearest neighbours algorithm (k-NN), we found that the best value for $k$ is $3$, which can be observed in Figure~\ref{fig:KNNPlot}. This result indicates that if $2$ out of the $k = 3$ neighbours have a positive response for diabetes, the individual will be assigned a positive response for diabetes, i.e. Outcome = 1. Conversely, if $2$ out of the $k = 3$ neighbours have a non-positive response for diabetes, the individual will be assigned a non-positive response, i.e. Outcome = 0. After inputting $k=3$ and running the k-NN algorithm, we found that the MCR given by k-NN classification is $0.2916667$, i.e. $\sim71\%$ of the individuals predicted to have a positive or non-positive response for diabetes were correctly classified.
 
 \begin{figure}[h!]
 	\centering
-	\fbox{\includegraphics[width=0.78\textwidth]{knnplot.png}} 
+	\fbox{\includegraphics[width=0.80\textwidth]{knnplot.png}} 
 	\caption{Output Plot From k-NN Classification} 
 	\label{fig:KNNPlot}
 \end{figure}
@@ -226,15 +226,15 @@ After running tune.knn() with $5$-fold cross validation to get the parameters fo
 \begin{indent}
 	\onehalfspacing
 	
-	After running tune.RandomForest() with $5$-fold cross validation to get the best parameters for the random forest algorithm, we found that the best value for $\mathcal{M}$ is $4$ and the best value of $M$ is $200$. 
+After tuning the algorithm using a $5$-fold cross-validation to get the optimal parameters for the random forest algorithm, we found that the best value for $\mathcal{M}$ is $4$ and the best value of $M$ is $200$. 
 	
-	After tuning and inputting $\mathcal{M}$ = $4$ and $M$ = $200$ into the random forest algorithm, we found that the MCR given by random forest classification is $0.28125$, i.e. $\sim72\%$ of the the individuals predicted to have or not have diabetes were correctly classified. Consequently, Figure~\ref{fig:RFPlot} highlights that Glucose and BMI are the most important predictor variables, and excluding them from the model will lead to worse accuracy in predicting the Outcome. Conversely, SkinThickness and BloodPressure are the least important predictors and excluding them will not greatly affect the accuracy of the model.
+After inputting $\mathcal{M}$ = $4$ and $M$ = $200$ into the random forest algorithm, we found that the MCR given by random forest classification is $0.28125$, i.e. $\sim72\%$ of the individuals predicted to have a positive or non-positive response for diabetes were correctly classified. Consequently, Figure~\ref{fig:RFPlot} highlights that Glucose and BMI are the most important predictor variables, and excluding them from the model will lead to worse accuracy in predicting the Outcome. Conversely, SkinThickness and BloodPressure are the least important predictors and excluding them will not greatly affect the accuracy of the model.
 \end{indent}
 
 \begin{figure}[h!]
 	\centering
 	% First figure
-	\fbox{{\includegraphics[width=0.78\textwidth]{MeanDecreaseAccuracyPlotForRandomForest.png}}}
+	\fbox{{\includegraphics[width=0.80\textwidth]{MeanDecreaseAccuracyPlotForRandomForest.png}}}
 	\caption{MeanDecreaseAccuracy {\&}\ MeanDecreaseGini Plot from Random Forest} 
 	\label{fig:RFPlot}
 \end{figure}
@@ -265,7 +265,7 @@ After running tune.knn() with $5$-fold cross validation to get the parameters fo
 \indent 
 \onehalfspacing
 
-From (Table~\ref{tab:BinLogReg}), we see that the coefficients for BloodPressure, SkinThickness, Insulin, and Age have high p-values, indicating that at $\alpha = 0.05$ level of significance, they are not significant in predicting the Outcome. At this step, the full binary logistic regression model outputs a Misclassification Rate (MCR) of  0.3697917.
+From (Table~\ref{tab:BinLogReg}), we see that the coefficients for BloodPressure, SkinThickness, Insulin, and Age have high p-values, indicating that at $\alpha = 0.05$ level of significance, they are not significant in predicting the Outcome. At this step, the MCR given by the full binary logistic regression model is 0.3697917.
 
 \begin{table}[h!]
 	\centering
@@ -285,9 +285,9 @@ From (Table~\ref{tab:BinLogReg}), we see that the coefficients for BloodPressure
 	\label{tab:BinLogRegA}
 \end{table}
 
-Table~\ref{tab:BinLogRegA} showcases the output from the reduced Binary Logistic Regression Model. We observe that the $p$-values for all the predictors in the model are less than $\alpha = 0.05$, indicating that they're statistically significant in predicting the response variable, Outcome. Furthermore, the MCR has decreased to $0.2395833$, i.e. $\sim76\%$ of the the individuals predicted to have or not have diabetes were correctly classified. showcasing an improvement in the performance of the model. 
+Table~\ref{tab:BinLogRegA} showcases the output from the reduced Binary Logistic Regression Model. We observe that the $p$-values for all the predictors in the model are less than $\alpha = 0.05$, indicating that they're statistically significant in predicting the response variable, Outcome. Furthermore, the MCR has decreased to $0.2395833$, i.e. $\sim76\%$ of the individuals predicted to have a positive or non-positive response for diabetes were correctly classified, showcasing an improvement in the performance of the model. 
 
-Furthermore, Table~\ref{tab:BinLogRegA} showcases the Odds Ratios (OR) for the predictors in the model. Note that each OR is greater than 1, suggesting increased likelihoods of the presence of diabetes with respect to the predictors. Specifically, the OR for Pregnancies is 1.167, indicating that females with a history of pregnancies are 1.167 times more likely to have diabetes than those without. Most significantly, the OR for DiabetesPedigreeFunction is 2.372, meaning that females who indicate a genetic predisposition to diabetes based on family history are 2.372 times more likely to develop diabetes than those without a genetic predisposition. The OR for the other predictors can be interpreted similarly. 
+Furthermore, Table~\ref{tab:BinLogRegA} highlights the Odds Ratios (OR) for the predictors in the model. Note that each OR is greater than 1, suggesting increased likelihoods of the presence of diabetes with respect to the predictors. Specifically, the OR for Pregnancies is 1.167, indicating that females with a history of pregnancies are 1.167 times more likely to have diabetes than those without. Most significantly, the OR for DiabetesPedigreeFunction is 2.372, meaning that females who indicate a genetic predisposition to diabetes based on family history are 2.372 times more likely to develop diabetes than those without a genetic predisposition. The OR for the other predictors can be interpreted similarly. 
 
 \subsection{Boosting}
 
@@ -298,14 +298,14 @@ Boosting achieved an accuracy of 73.44\%, with an AUC of 0.802. The AUC is the a
 
 \begin{figure}[h!]
 	\centering
-	\fbox{\includegraphics[width=0.78\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G2.png"}}
+	\fbox{\includegraphics[width=0.80\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G2.png"}}
 	\caption{ROC Curve for Boosting Model}
 	\label{fig:roc}
 \end{figure}
 
 \begin{figure}[h!]
 	\centering
- 	\fbox{\includegraphics[width=0.78\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G1.png"}}
+ 	\fbox{\includegraphics[width=0.80\textwidth]{"C:/Users/msafi/OneDrive/Documents/GitHub/4m_final_project/G1.png"}}
  	\caption{Feature Importance Plot}
  	\label{fig:importance}
 \end{figure}
@@ -314,7 +314,7 @@ Boosting proved to be an effective method for diabetes classification through ac
 
 \begin{indent}
 	
-Summarizing the performance results from k-Nearest Neighbours classification, Binary Logistic Regression, and the ensemble methods, we see that each of the models outputted an accuracy of $70.833\%, 76.042\%, 71.88\%$, and $73.44\%$ respectively, indicating that Binary Logistic Regression was the best supervised learning analysis method in predicting the onset of diabetes. 
+Summarizing the performance results from k-Nearest Neighbours classification, Binary Logistic Regression, Random Forest, and Boosting, we see that each of the models outputted an accuracy of $70.833\%, 76.042\%, 71.88\%$, and $73.44\%$ respectively, indicating that Binary Logistic Regression was the best supervised learning analysis method in predicting the onset of diabetes. 
 
 \end{indent}
 
@@ -324,7 +324,7 @@ Summarizing the performance results from k-Nearest Neighbours classification, Bi
 
 Throughout this work, we presented various statistical supervised learning analysis methods that could be used to study the \href{https://www.kaggle.com/datasets/hasibur013/diabetes-dataset}{Diabetes Dataset} from \cite{Kaggles}. We effectively showcased the performance accuracy of the k-Nearest Neighbours algorithm, Binary Logistic Regression algorithm, and the ensemble methods: Random Forest and Boosting. Furthermore, the conclusions determined by each of the various methods align with the general scientific consensus on predictors for diabetes in females such as Glucose levels, BMI, Age, and whether an individuals family history has been shown to have a predisposition to diabetes or not. 
 
-Ultimately, although various supervised learning analysis methods have proven to be effective in predicting the onset of diabetes based on several detailed medical diagnostic measurement predictor variables, we remain conscious of challenges associated with some of these methods, such as the large sample size required for logistic regression to output stable results, choosing ‘$k$’ in k-NN through computationally expensive techniques like cross validation, and the high memory usage and computational cost associated with random forest \citep{7724478}.
+Ultimately, although various supervised learning analysis methods have proven to be effective in predicting the onset of diabetes based on several detailed medical diagnostic measurement predictor variables, we remain conscious of challenges associated with some of these methods, such as the large sample size required for logistic regression to output stable results, choosing ‘$k$’ in k-NN through computationally expensive techniques like cross-validation, and the high memory usage and computational cost associated with random forest \citep{7724478}.
 
 
  \section{Bibliography}
