@@ -88,7 +88,7 @@
             \item We will perform a binary logistic regression since our response variable "outcome" is binary.
             \item The initial model incorporates all eight predictor variables.
             \item The objective of this technique is to identify the most significant predictor using backwards elimination.
-            \item We want the final model to have only the most significant variables.
+            \item We want the final model to have only the most significant variables. Removed predictors with p-values > 0.05.
         \end{itemize}
 \end{frame}
 
@@ -104,9 +104,13 @@
 
 \begin{frame}
     \frametitle{Discussions - Logistic regression}
-    \begin{table}[h!]
+        \begin{itemize}
+            \setlength\itemsep{1em}
+            \item Table ~\ref{tab:BinLogReg} suggests that we should remove variables "BloodPressure", "SkinThickness", "insulin", and "Age" from the model, since their p-values were greater than $0.05$.
+            \end{itemize}
+ \begin{table}[h!]
         \centering
-        \resizebox{=0.60\textwidth}{!}{
+        \resizebox{=0.75\textwidth}{!}{
             \begin{tabular}{|l|l|l|l|l|}
                 \hline
                 \textbf{Coefficients} & \textbf{Estimate} & \textbf{Std. Error} & \textbf{Z-Value} & \textbf{Pr(>|Z|)} \\ \hline
@@ -123,15 +127,19 @@
         }
         \caption{Binary Logistic Regression Full Model Output}
         \label{tab:BinLogReg}
-    \end{table}
+    \end{table}    
+\end{frame}
+\begin{frame}
+    \frametitle{Discussions - Logistic regression}
     \begin{itemize}
-        \item  Table ~\ref{tab:BinLogReg} suggests that we should remove variables "SkinThickness" and "insulin" from the model
+        \item Table~\ref{tab:BinLogRegA} implies we have sufficient evidence to suggest those four variables have a significant influence over "outcome".
     \end{itemize}
-   
-    
-    \begin{table}[h!]
+    \begin{itemize}
+        \item Odds Ratio show the influence of various factors on the likelihood of developing diabetes
+    \end{itemize}
+    \begin{table}
         \centering
-        \resizebox{=0.70\textwidth}{!}{
+        \resizebox{=\textwidth}{!}{
             \begin{tabular}{|l|l|l|l|l||l|}
                 \hline
                 Coefficients: & Estimate & Std. Error & z value & Pr(>|z|) & Odds Ratio \\ \hline
@@ -147,10 +155,8 @@
         \label{tab:BinLogRegA}
     \end{table}
     \begin{itemize}
-        \item We obtain the MCR to be $0.2396$ after selecting the variables appropriately. 
+        \item We obtain that the MCR for binary logistic regression is $0.23958$.
     \end{itemize}
-
-
 \end{frame}
 
 
