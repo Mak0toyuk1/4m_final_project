@@ -36,11 +36,38 @@
     \begin{itemize}
         \setlength\itemsep{1em}
         \item All variables are integers except for "BMI" and "DiabetesPedigreeFunction"
-        \item "SkinThickness" is well correlated with "BMI" and "Insulin", "Age" is well correlated with "Pregnancies".
-        \item "Glucose" is reasonably correlated with "insulin", "BMI" and "Age".
+
         \item The dataset will be split into 2, with the response variable being "outcome" and all other variables being predictor variables.
         \item 75 percent of the data will be used for training, and the rest will be used for testing.
     \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Exploratory Data Analysis (EDA) and data preparation}
+    \begin{figure}[h!]
+        \centering
+        % First figure
+        \begin{minipage}{0.45\textwidth}
+            \fbox{{\includegraphics[width=\textwidth]{correlations2.png}}}
+            \caption{Correlation of Variables} 
+            \label{fig:corplot}
+        \end{minipage}
+        \hfill % Horizontal space between figures
+        % Second figure
+        \centering
+        \begin{minipage}{0.45\textwidth}
+            \centering
+            \fbox{\includegraphics[width=\textwidth]{normal.png}} 
+            \caption{Normal QQ-Plot} 
+            \label{fig:qqplot}
+        \end{minipage}
+    \end{figure}
+    \begin{itemize}
+        \item The normal QQ-plot suggzests that our dataset is not normal
+        \item SkinThickness" is well correlated with "BMI" and "Insulin", "Age" is well correlated with "Pregnancies".
+        \item "Glucose" is reasonably correlated with "insulin", "BMI" and "Age".
+    \end{itemize}
+    
 \end{frame}
 
 \begin{frame}
@@ -65,21 +92,21 @@
         \end{itemize}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Discussions - Logistic regression}
-        \begin{itemize}
-            \setlength\itemsep{1em}
-            \item Table ~\ref{tab:BinLogReg} suggests that we should remove variables "SkinThickness" and "insulin" from the model, since their p-values were greater than $0.05$.
-            \item Table ~\ref{tab:BinLogRegA} implies that we have sufficient evidence to suggest that "Pregnancies", "Glucose", "Blood Pressure", "BMI", "DiabetesPedigreeFunction" and "Age" have a significant influence over "outcome". 
-            \item We obtain that the MCR for binary logistic regression is $0.23958$.
-        \end{itemize}
-\end{frame}
+% \begin{frame}
+%     \frametitle{Discussions - Logistic regression}
+%         \begin{itemize}
+%             \setlength\itemsep{1em}
+%             \item Table ~\ref{tab:BinLogReg} suggests that we should remove variables "SkinThickness" and "insulin" from the model, since their p-values were greater than $0.05$.
+%             \item Table ~\ref{tab:BinLogRegA} implies that we have sufficient evidence to suggest that "Pregnancies", "Glucose", "Blood Pressure", "BMI", "DiabetesPedigreeFunction" and "Age" have a significant influence over "outcome". 
+%             \item We obtain that the MCR for binary logistic regression is $0.23958$.
+%         \end{itemize}
+% \end{frame}
 
 \begin{frame}
     \frametitle{Discussions - Logistic regression}
     \begin{table}[h!]
         \centering
-        \resizebox{=0.75\textwidth}{!}{
+        \resizebox{=0.60\textwidth}{!}{
             \begin{tabular}{|l|l|l|l|l|}
                 \hline
                 \textbf{Coefficients} & \textbf{Estimate} & \textbf{Std. Error} & \textbf{Z-Value} & \textbf{Pr(>|Z|)} \\ \hline
@@ -97,10 +124,14 @@
         \caption{Binary Logistic Regression Full Model Output}
         \label{tab:BinLogReg}
     \end{table}
+    \begin{itemize}
+        \item  Table ~\ref{tab:BinLogReg} suggests that we should remove variables "SkinThickness" and "insulin" from the model
+    \end{itemize}
+   
     
     \begin{table}[h!]
         \centering
-        \resizebox{=\textwidth}{!}{
+        \resizebox{=0.70\textwidth}{!}{
             \begin{tabular}{|l|l|l|l|l||l|}
                 \hline
                 Coefficients: & Estimate & Std. Error & z value & Pr(>|z|) & Odds Ratio \\ \hline
@@ -115,6 +146,10 @@
         \caption{Binary Logistic Regression Reduced Model Output with Odds Ratio}
         \label{tab:BinLogRegA}
     \end{table}
+    \begin{itemize}
+        \item We obtain the MCR to be $0.2396$ after selecting the variables appropriately. 
+    \end{itemize}
+
 
 \end{frame}
 
@@ -185,6 +220,7 @@
     \frametitle{Conclusion}
     %insert the variable importance plot here.
         \begin{itemize}
+            \item The MCRs indicates that Binary logistic regression was the best method out of all methods used.
             \item We effectively showcased
             the performance accuracy of the k-Nearest Neighbours algorithm, Binary Logistic Regression al-
             gorithm, and the ensemble methods: Random Forest and Boosting. 

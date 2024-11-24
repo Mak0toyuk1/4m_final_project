@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1732486702.29312 "/home/evo/4m_final_project/final_project_slides.tex" "final_project_slides.pdf" "final_project_slides" 1732486703.82437 0
-  "/home/evo/4m_final_project/final_project_slides.tex" 1732486702.09108 9056 89df9c2d3067d075e25826d512db6832 ""
+["pdflatex"] 1732488125.15091 "/home/evo/4m_final_project/final_project_slides.tex" "final_project_slides.pdf" "final_project_slides" 1732488126.91556 0
+  "/home/evo/4m_final_project/final_project_slides.tex" 1732488124.94018 10325 16a185d25f4269234907eef4ca6e4899 ""
   "/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc" 1727349926 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1727349926 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texmf-dist/fonts/tfm/adobe/helvetic/phvb8r.tfm" 1727349926 4484 b828043cbd581d289d955903c1339981 ""
@@ -200,11 +200,13 @@
   "G1.png" 1732150981.34388 7579 7f117a69ce897571c3408c6f453b80a4 ""
   "G2.png" 1732150981.34388 9412 3d0209cec8cc8d06cfe3fdf737677e00 ""
   "MeanDecreaseAccuracyPlotForRandomForest.png" 1732150981.34388 25052 e1eb5c37e18450af1c85f77610c2b3c1 ""
-  "final_project_slides.aux" 1732486703.72442 2443 80b446305bc9f018087c910fafe48185 "pdflatex"
-  "final_project_slides.nav" 1732486703.72442 1202 a971439ba5eedf62b158aa4c3f07763d "pdflatex"
-  "final_project_slides.out" 1732486703.14108 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "final_project_slides.tex" 1732486702.09108 9056 89df9c2d3067d075e25826d512db6832 ""
+  "correlations2.png" 1732482271.06251 293852 e49e8b6a70aa72af02b684fa0d7adff8 ""
+  "final_project_slides.aux" 1732488126.80685 2631 3a4b499ec73ba881ce267852e77a43de "pdflatex"
+  "final_project_slides.nav" 1732488126.80685 1202 a971439ba5eedf62b158aa4c3f07763d "pdflatex"
+  "final_project_slides.out" 1732488126.00684 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "final_project_slides.tex" 1732488124.94018 10325 16a185d25f4269234907eef4ca6e4899 ""
   "knnplot.png" 1732150981.34721 19414 829092802c6ec9540ab6e57effe8b177 ""
+  "normal.png" 1732482271.06584 179514 bbec9bb6166cc2532993c3eae527243b ""
   (generated)
   "final_project_slides.aux"
   "final_project_slides.log"
