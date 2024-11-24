@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024/Arch Linux) (preloaded format=pdflatex 2024.11.14)  24 NOV 2024 17:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024/Arch Linux) (preloaded format=pdflatex 2024.11.14)  24 NOV 2024 18:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -763,50 +763,52 @@ Overfull \hbox (6.79999pt too wide) in paragraph at lines 71--71
 
 ] [7
 
+] [8
+
 ]
-<knnplot.png, id=207, 1266.7325pt x 641.39626pt>
+<knnplot.png, id=234, 1266.7325pt x 641.39626pt>
 File: knnplot.png Graphic file (type png)
 <use knnplot.png>
-Package pdftex.def Info: knnplot.png  used on input line 172.
+Package pdftex.def Info: knnplot.png  used on input line 178.
 (pdftex.def)             Requested size: 245.83282pt x 124.46986pt.
- [8
+ [9
 
  <./knnplot.png>]
-<MeanDecreaseAccuracyPlotForRandomForest.png, id=238, 1266.7325pt x 641.39626pt>
+<MeanDecreaseAccuracyPlotForRandomForest.png, id=264, 1266.7325pt x 641.39626pt>
 File: MeanDecreaseAccuracyPlotForRandomForest.png Graphic file (type png)
 <use MeanDecreaseAccuracyPlotForRandomForest.png>
-Package pdftex.def Info: MeanDecreaseAccuracyPlotForRandomForest.png  used on input line 190.
+Package pdftex.def Info: MeanDecreaseAccuracyPlotForRandomForest.png  used on input line 196.
 (pdftex.def)             Requested size: 153.64493pt x 77.79611pt.
 
-Overfull \vbox (0.30681pt too high) detected at line 190
- []
-
-[9
-
- <./MeanDecreaseAccuracyPlotForRandomForest.png>]
-<G2.png, id=266, 599.23875pt x 342.078pt>
-File: G2.png Graphic file (type png)
-<use G2.png>
-Package pdftex.def Info: G2.png  used on input line 217.
-(pdftex.def)             Requested size: 147.49782pt x 84.1987pt.
-
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 217--217
-[][] 
- []
-
-<G1.png, id=267, 599.23875pt x 342.078pt>
-File: G1.png Graphic file (type png)
-<use G1.png>
-Package pdftex.def Info: G1.png  used on input line 217.
-(pdftex.def)             Requested size: 147.49782pt x 84.1987pt.
-
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 217--217
- [][] 
+Overfull \vbox (0.30681pt too high) detected at line 196
  []
 
 [10
 
- <./G2.png> <./G1.png>] [11
+ <./MeanDecreaseAccuracyPlotForRandomForest.png>]
+<G2.png, id=292, 599.23875pt x 342.078pt>
+File: G2.png Graphic file (type png)
+<use G2.png>
+Package pdftex.def Info: G2.png  used on input line 223.
+(pdftex.def)             Requested size: 147.49782pt x 84.1987pt.
+
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 223--223
+[][] 
+ []
+
+<G1.png, id=293, 599.23875pt x 342.078pt>
+File: G1.png Graphic file (type png)
+<use G1.png>
+Package pdftex.def Info: G1.png  used on input line 223.
+(pdftex.def)             Requested size: 147.49782pt x 84.1987pt.
+
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 223--223
+ [][] 
+ []
+
+[11
+
+ <./G2.png> <./G1.png>] [12
 
 ]
 \tf@nav=\write6
@@ -827,18 +829,18 @@ Package rerunfilecheck Info: File `final_project_slides.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 21862 strings out of 476076
- 413551 string characters out of 5793774
- 1952187 words of memory out of 5000000
- 43479 multiletter control sequences out of 15000+600000
+ 21866 strings out of 476076
+ 413586 string characters out of 5793774
+ 1942187 words of memory out of 5000000
+ 43481 multiletter control sequences out of 15000+600000
  590479 words of font info for 77 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  128i,14n,123p,443b,561s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on final_project_slides.pdf (11 pages, 444473 bytes).
+Output written on final_project_slides.pdf (12 pages, 446291 bytes).
 PDF statistics:
- 357 PDF objects out of 1000 (max. 8388607)
- 310 compressed objects within 4 object streams
- 31 named destinations out of 1000 (max. 500000)
+ 383 PDF objects out of 1000 (max. 8388607)
+ 335 compressed objects within 4 object streams
+ 33 named destinations out of 1000 (max. 500000)
  73 words of extra memory for PDF output out of 10000 (max. 10000000)
 

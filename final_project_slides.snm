@@ -1,8 +1,8 @@
 \beamer@slide {fig:corplot}{4}
 \beamer@slide {fig:qqplot}{4}
 \beamer@slide {tab:BinLogReg}{7}
-\beamer@slide {tab:BinLogRegA}{7}
-\beamer@slide {fig:KNNPlot}{8}
-\beamer@slide {fig:RFPlot}{9}
-\beamer@slide {fig:ROC curve}{10}
-\beamer@slide {fig:importance}{10}
+\beamer@slide {tab:BinLogRegA}{8}
+\beamer@slide {fig:KNNPlot}{9}
+\beamer@slide {fig:RFPlot}{10}
+\beamer@slide {fig:ROC curve}{11}
+\beamer@slide {fig:importance}{11}
