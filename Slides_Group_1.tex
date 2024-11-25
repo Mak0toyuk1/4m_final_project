@@ -1,5 +1,6 @@
 \documentclass{beamer}
 % \usepackage[authoryear]{natbib}
+\setbeamertemplate{caption}[numbered]
 \usepackage{graphicx}
 \graphicspath{/home/evo/4m_final_project}
 \usepackage{amsmath,amsthm,amssymb}
@@ -7,11 +8,15 @@
 \usepackage{times}
 \usepackage[sc]{mathpazo} % Use the Palatino font
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{subcaption}
+\usepackage{caption}
+\captionsetup[subfigure]{labelformat=empty} % Removes the (a), (b) labels
+\usepackage{hyperref}
 
 
 %Information to be included in the title page:
-\title{Multivariate analysis of the diabetes dataset}
-\author{Rayyan Kazim,Safi Khan,Xinyi Chen,Tony Xu, Zesen Chen}
+\title{Multivariate Analysis Of The Diabetes Dataset}
+\author{Rayyan Kazim, Safi Khan, Xinyi Chen, Tony Xu, Zesen Chen}
 \institute{McMaster University}
 \date{12/2/2024}
 
@@ -20,13 +25,12 @@
 \frame{\titlepage}
 
 \begin{frame}
-\frametitle{Dataset, EDA and data preparation}
+\frametitle{Dataset, Exploratory Data Analysis (EDA), Data Preparation}
 \begin{itemize}
     \setlength\itemsep{1em}
-    \item Using the `R` programming language, we will study the diabetes dataset obtained from Kaggle which has 768 rows and 9 columns where each row corresponds to an unique patient record. 
-    \item All variables are integers except for "BMI" and "DiabetesPedigreeFunction" which are categorized as float variables.
-    \item The response variable in our dataset is "outcome" and all other variables are predictor variables.
-    \item 75 percent of the data will be used for training, and the rest will be used for testing.
+    \item Using the `R` programming language, we study the diabetes dataset obtained from Kaggle which has 768 rows and 9 columns. Each row corresponds to an unique patient record, and each of the columns represent the unique variables. 
+    \item There is one binary response variable that denotes presence of diabetes, the others are predictor variables. Each of the predictors are integers except for "BMI" and "DiabetesPedigreeFunction" which are categorized as float variables.
+    \item The full dataset will be utilized and scaled. 75\% of the data will be used for training, and the rest will be used for testing.
 \end{itemize}
 \end{frame}
 
@@ -43,52 +47,52 @@
 % \end{frame}
 
 \begin{frame}
-    \frametitle{Exploratory Data Analysis (EDA) and data preparation}
-    \begin{figure}[h!]
-        \centering
-        % First figure
-        \begin{minipage}{0.45\textwidth}
-            \fbox{{\includegraphics[width=\textwidth]{correlations2.png}}}
-            \caption{Correlation of Variables} 
-            \label{fig:corplot}
-        \end{minipage}
-        \hfill % Horizontal space between figures
-        % Second figure
-        \centering
-        \begin{minipage}{0.45\textwidth}
-            \centering
-            \fbox{\includegraphics[width=\textwidth]{normal.png}} 
-            \caption{Normal QQ-Plot} 
-            \label{fig:qqplot}
-        \end{minipage}
-    \end{figure}
+    \frametitle{EDA Continued}
+	\begin{figure}[h!]
+		\centering
+		% First figure
+		\begin{minipage}{0.48\textwidth}
+			\fbox{{\includegraphics[width=\textwidth]{correlations2.png}}}
+			\caption{Correlation of Variables} 
+			\label{fig:corplot}
+		\end{minipage}
+		\hfill % Horizontal space between figures
+		% Second figure
+		\centering
+		\begin{minipage}{0.48\textwidth}
+			\centering
+			\fbox{\includegraphics[width=\textwidth]{normal.png}} 
+			\caption{Normal QQ-Plot} 
+			\label{fig:qqplot}
+		\end{minipage}
+	\end{figure}
+	\vspace{-0.2cm} % Reduce space between text and figure
     \begin{itemize}
-        \item The normal QQ-plot suggzests that our dataset is not normal
-        \item SkinThickness" is well correlated with "BMI" and "Insulin", "Age" is well correlated with "Pregnancies".
-        \item "Glucose" is reasonably correlated with "insulin", "BMI" and "Age".
+        \item Figure~\ref{fig:corplot} showcases that "SkinThickness" is well correlated with "BMI" and "Insulin," while "Age" is well correlated with "Pregnancies." Additionally, "Glucose" is reasonably correlated with "insulin," "BMI," and "Age."
+        \item Figure~\ref{fig:qqplot} indicates that our dataset is not normally distributed.
     \end{itemize}
     
 \end{frame}
 
 \begin{frame}
-    \frametitle{Methodologies - Supervised learning analysis}
+    \frametitle{Methodologies - Supervised Learning Analysis}
         \begin{itemize}
             \setlength\itemsep{1em}
-            \item We used the methods: k-nearest neighbours ,random forest classfiers and boosting for our supervised learning analysis.
-            \item K-nearest neighbours is a non-parametric, supervised learning classifiers that uses proximity to make classifications about the grouping of a dataset.
-            \item RandomForest classifiers is a bootstrapping sampling method that combines the results of multiple decision trees to draw on a conclusion.
-            \item Boosting is similar to random forest, however it is not a bootstrapping sampling method. Boosting also uses the entire dataset, or some subsample thereof, to generate the ensemble.
+            \item Used the following Supervised Learning Analysis methods: k-Nearest Neighbours (k-NN), Random Forest, and Boosting to study our dataset.
+            \item k-NN is a non-parametric, supervised learning classifier that uses proximity to make classifications about the grouping of a dataset.
+            \item Random Forest is a bootstrapping sampling method that combines the results of multiple decision trees to draw on a conclusion.
+            \item Boosting is similar to Random Forest, however it is not a bootstrapping sampling method. Boosting also uses the entire dataset, or some subsample thereof, to generate the ensemble.
         \end{itemize}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Methodologies - Logistic regression}
+    \frametitle{Methodologies - Binary Logistic Regression}
         \begin{itemize}
             \setlength\itemsep{1em}
-            \item We will perform a binary logistic regression since our response variable "outcome" is binary.
+            \item We performed Binary Logistic Regression because the response variable of our dataset, "Outcome," is binary.
             \item The initial model incorporates all eight predictor variables.
-            \item The objective of this technique is to identify the most significant predictor using backwards elimination.
-            \item We want the final model to have only the most significant variables. Removed predictors with p-values > 0.05.
+            \item The objective of using this technique is to identify the most significant predictors by using backwards elimination.
+            \item This process ensures the final model will have only the most significant variables.
         \end{itemize}
 \end{frame}
 
@@ -103,14 +107,14 @@
 % \end{frame}
 
 \begin{frame}
-    \frametitle{Discussions - Logistic regression}
+    \frametitle{Discussion - Binary Logistic Regression}
         \begin{itemize}
             \setlength\itemsep{1em}
-            \item Table ~\ref{tab:BinLogReg} suggests that we should remove variables "BloodPressure", "SkinThickness", "insulin", and "Age" from the model, since their p-values were greater than $0.05$.
+            \item Table~\ref{tab:BinLogReg} illustrates that "BloodPressure," "SkinThickness," "Insulin," and "Age," are statistically insignificant because their $p-$values are greater than $\alpha = 0.05$ level of significance, indicating that they should be removed in the final model. 
             \end{itemize}
  \begin{table}[h!]
         \centering
-        \resizebox{=0.75\textwidth}{!}{
+        \resizebox{=0.92\textwidth}{!}{
             \begin{tabular}{|l|l|l|l|l|}
                 \hline
                 \textbf{Coefficients} & \textbf{Estimate} & \textbf{Std. Error} & \textbf{Z-Value} & \textbf{Pr(>|Z|)} \\ \hline
@@ -130,13 +134,14 @@
     \end{table}    
 \end{frame}
 \begin{frame}
-    \frametitle{Discussions - Logistic regression}
+    \frametitle{Discussion - Binary Logistic Regression Continued}
     \begin{itemize}
-        \item Table~\ref{tab:BinLogRegA} implies we have sufficient evidence to suggest those four variables have a significant influence over "outcome".
+        \item The $p-$values from Table~\ref{tab:BinLogRegA} imply we have sufficient statistical evidence to conclude the variables present in the model have a significant influence in predicting "Outcome."
     \end{itemize}
     \begin{itemize}
-        \item Odds Ratio show the influence of various factors on the likelihood of developing diabetes
+        \item Table~\ref{tab:BinLogRegA} highlights Odds Ratio values of each predictor, showcasing the highers odds each variable has on predicting a  positive or non-positive outcome. 
     \end{itemize}
+    \vspace{-0.3cm} % Reduce space between text and figure
     \begin{table}
         \centering
         \resizebox{=\textwidth}{!}{
@@ -154,20 +159,21 @@
         \caption{Binary Logistic Regression Reduced Model Output with Odds Ratio}
         \label{tab:BinLogRegA}
     \end{table}
+    \vspace{-0.5cm} % Reduce space between text and figure
     \begin{itemize}
-        \item We obtain that the MCR for binary logistic regression is $0.23958$.
+        \item We obtain that the MCR for binary logistic regression is $0.23958.$
     \end{itemize}
 \end{frame}
 
 
 
 \begin{frame}
-    \frametitle{Discussions - k-nearest neighbours}
+    \frametitle{Discussion - k-Nearest Neighbours}
     %insert the plot here.
         \begin{itemize}
             \setlength\itemsep{1em}
-            \item 5-fold cross validation suggests that the best value for $k$ is $3$.
-            \item Executing the knn() function with $k=3$, we obtain that the MCR of the k-nearest neighbours is $0.2916667$
+            \item Figure~\ref{fig:KNNPlot} highlights that tuning with 5-fold cross validation suggests that the best value for $k$ is $3$.
+            \item Running the k-NN algorithm with $k=3$, we conclude that the MCR $=$ $0.2916667.$
         \end{itemize}
         \begin{figure}[h!]
             \centering
@@ -178,29 +184,30 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Discussions - Random forests}
+    \frametitle{Discussion - Random Forest}
     %insert the variable importance plot here.
         \begin{itemize}
             \setlength\itemsep{1em}
-            \item 5-fold cross validation suggests that the best value for mtry is $4$ and the best value for ntree is $200$.
-            \item Executing the RandomForest()  function with mtry $=4$ and ntree $=200$, we obtain that the MCR of the RandomForest is $0.28125$.
-            \item We observe that Glucose and BMI are the two most important variables.
+            \item Tuning with 5-fold cross validation gives the best value for $\mathcal{M}$ and $M$ as $4$ and $200$ respectively.
+            \vspace{-0.2cm} % Reduce space between text and figure
+            \item Running Random Forest with $\mathcal{M} = 4$ and $M = 200$, we conclude that the MCR $ = 0.28125.$
+            \vspace{-0.2cm} % Reduce space between text and figure
+            \item Figure~\ref{fig:RFPlot} showcases that "Glucose" and "BMI" are the two most important variables in the model.
         \end{itemize}
         \begin{figure}[h!]
             \centering
             % First figure
-            \fbox{{\includegraphics[width=0.50\textwidth]{MeanDecreaseAccuracyPlotForRandomForest.png}}}
-            \caption{MeanDecreaseAccuracy {\&}\ MeanDecreaseGini Plot from Random Forest} 
+            \fbox{{\includegraphics[width=0.78\textwidth]{MeanDecreaseAccuracyPlotForRandomForest.png}}}
+            \caption{Random Forest Variable Importance} 
             \label{fig:RFPlot}
         \end{figure}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Discussions - Boosting}
+    \frametitle{Discussion - Boosting}
     \begin{itemize}
-        \item Boosting achieved an accuracy of $73.44$ percent (a MCR of $0.2656$), with an AUC of $0.802$. 
-        \item Boosting proved to be an effective method for diabetes classification through achieving an
-        AUC of 0.802 and identifying Glucose, BMI, and Age as the most critical predictors.
+        \item Boosting achieved an accuracy of $73.44\%$ (an MCR of $0.2656$), and an AUC of $0.802$. 
+        \item Figure~\ref{fig:importance} identifies "Glucose," "BMI," and "Age" as the most most predictors for "Outcome" in our Boosting model.
     \end{itemize}
     \begin{figure}[h!]
         \centering
@@ -226,10 +233,9 @@
     \frametitle{Conclusion}
     %insert the variable importance plot here.
         \begin{itemize}
-            \item The MCRs indicates that Binary logistic regression was the best method out of all methods used.
+            \item The MCR values of each method indicate that Binary Logistic Regression was the most accurate out of all methods used.
             \item We effectively showcased
-            the performance accuracy of the k-Nearest Neighbours algorithm, Binary Logistic Regression al-
-            gorithm, and the ensemble methods: Random Forest and Boosting. 
+            the performance accuracy of the k-Nearest Neighbours algorithm, Binary Logistic Regression algorithm, and the ensemble methods: Random Forest and Boosting. 
             \item The conclusions
             determined by each of the various methods align with the general scientific consensus on predictors for diabetes.
         \end{itemize}
